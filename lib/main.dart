@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   // Loader.context = context;
 
     return MultiProvider(
       providers: providers,
