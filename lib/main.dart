@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:inbound_flutter/core/model/inbound_data_model.dart';
 import 'package:inbound_flutter/core/route/route_paths.dart';
 import 'package:inbound_flutter/core/route/routes.dart';
 import 'package:inbound_flutter/di/dependency_injection.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:hive/hive.dart';
 
 import 'core/providers.dart';
+import 'dart:io';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  var externalDir;
+  if (Platform.isIOS) { // Platform is imported from 'dart:io' package
+    externalDir = await getApplicationDocumentsDirectory();
+  } else if (Platform.isAndroid) {
+    externalDir = await getExternalStorageDirectory();
+  }
   await setup();
+  Hive.registerAdapter(DataModelAdapter());
+  await Hive.initFlutter();
+  Hive.init(externalDir.path);
+  await Hive.openBox("inbound_database");
   runApp(const MyApp());
 }
 

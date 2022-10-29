@@ -1,6 +1,10 @@
 
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 
 class DashViewModel with ChangeNotifier {
@@ -15,11 +19,23 @@ class DashViewModel with ChangeNotifier {
 
   // Image Picking
   List<XFile?> _listImage = [];
+  List<String> _base64Image = [];
   List<XFile?> get listImage => _listImage;
+  List<String>? get base64Image => _base64Image;
   set listImageAdd(XFile? value) {
     _listImage.add(value) ;
+    convertImage(value);
     notifyListeners();
   }
+
+  convertImage(XFile? imageBytes) async{
+    //List<int> bytes = await imageBytes.readAsBytes();
+
+    final bytes = File(imageBytes!.path).readAsBytesSync();
+    String base64Image = base64Encode(bytes);
+    _base64Image.add(base64Image.toString());
+  }
+
   set listImageRemove(int index) {
     _listImage.removeAt(index) ;
     notifyListeners();
