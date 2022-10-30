@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 
 class DashViewModel with ChangeNotifier {
@@ -16,6 +15,7 @@ class DashViewModel with ChangeNotifier {
   TextEditingController sealNoController = TextEditingController();
   TextEditingController wareHouseController = TextEditingController();
   TextEditingController materialNoController = TextEditingController();
+  TextEditingController qytController = TextEditingController();
 
   // Image Picking
   List<XFile?> _listImage = [];
@@ -38,6 +38,7 @@ class DashViewModel with ChangeNotifier {
 
   set listImageRemove(int index) {
     _listImage.removeAt(index) ;
+    _base64Image.removeAt(index);
     notifyListeners();
   }
 

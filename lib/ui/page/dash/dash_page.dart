@@ -213,6 +213,22 @@ class _DashState extends State<DashPage> {
                     SizedBox(
                       height: 13.h,
                     ),
+                    Row(
+                      children: [
+                        CText(
+                          text: 'Qyt. : ',
+                          container_wight: 110.w,
+                        ),
+                        Flexible(
+                            child: CTextField(
+                                hint_text: 'Quantity.',
+                                controller: provider.qytController,
+                                textInputType: TextInputType.number))
+                      ],
+                    ),
+                    SizedBox(
+                      height: 13.h,
+                    ),
                     InkWell(
                       onTap: () {
                         FocusManager.instance.primaryFocus?.unfocus();
@@ -308,6 +324,7 @@ class _DashState extends State<DashPage> {
                     SizedBox(
                       height: 13.h,
                     ),
+
                     InkWell(
                       onTap: () async
                       {
@@ -343,7 +360,7 @@ class _DashState extends State<DashPage> {
                         //   DataModel d = DataModel.fromJson(testData[i]);
                         //   dataModel.add(d);
                         // }
-                        Hive.box("inbound_database").put("save_data", dataModel);
+                        // Hive.box("inbound_database").put("save_data", dataModel);
                         // log("TEST : ${dataModel[0].imageUrls.toString()}");
                         // log("READ TEST FROM HIVE : ${Hive.box("inbound_database").get("save_data")}");
                       },

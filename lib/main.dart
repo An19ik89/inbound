@@ -14,17 +14,9 @@ import 'dart:io';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var externalDir;
-  if (Platform.isIOS) { // Platform is imported from 'dart:io' package
-    externalDir = await getApplicationDocumentsDirectory();
-  } else if (Platform.isAndroid) {
-    externalDir = await getExternalStorageDirectory();
-  }
+
   await setup();
-  Hive.registerAdapter(DataModelAdapter());
-  await Hive.initFlutter();
-  Hive.init(externalDir.path);
-  await Hive.openBox("inbound_database");
+
   runApp(const MyApp());
 }
 

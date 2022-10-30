@@ -5,7 +5,7 @@ class DateTimeUtils{
   Future<DateTime?> selectDateFromPicker(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: DateTime(DateTime.now().year),
+        initialDate: DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day),
         firstDate: DateTime(DateTime.now().year - 30),
         lastDate: DateTime(DateTime.now().year + 20),
         builder: (BuildContext context, Widget? child) {
