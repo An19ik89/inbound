@@ -1,10 +1,13 @@
 
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:inbound_flutter/core/model/inbound_data_model.dart';
 
 class DashViewModel with ChangeNotifier {
 
@@ -19,9 +22,9 @@ class DashViewModel with ChangeNotifier {
 
   // Image Picking
   List<XFile?> _listImage = [];
-  List<String> _base64Image = [];
+  List<String> _base64ImageList = [];
   List<XFile?> get listImage => _listImage;
-  List<String>? get base64Image => _base64Image;
+  List<String>? get base64ImageList => _base64ImageList;
   set listImageAdd(XFile? value) {
     _listImage.add(value) ;
     convertImage(value);
@@ -33,12 +36,12 @@ class DashViewModel with ChangeNotifier {
 
     final bytes = File(imageBytes!.path).readAsBytesSync();
     String base64Image = base64Encode(bytes);
-    _base64Image.add(base64Image.toString());
+    _base64ImageList.add(base64Image.toString());
   }
 
   set listImageRemove(int index) {
     _listImage.removeAt(index) ;
-    _base64Image.removeAt(index);
+    _base64ImageList.removeAt(index);
     notifyListeners();
   }
 
@@ -71,6 +74,36 @@ class DashViewModel with ChangeNotifier {
   set barcode(String? value) {
     _barcode = value ;
     notifyListeners();
+  }
+
+  void indbound_data(){
+
+    DataModel dataModel = DataModel();
+    dataModel.containerSl = containerSlController.text;
+    dataModel.sealNo = sealNoController.text;
+    dataModel.warehouse = wareHouseController.text;
+    dataModel.materialNo = materialNoController.text;
+    dataModel.date = "${_dobDay ??""}/${_dobMonth??""}/${_dobYear??""}";
+    dataModel.reelNo = "barcode";
+    dataModel.quantity = "1";
+    dataModel.imageUrls = base64ImageList;
+
+    Hive.box("inbound_database").put("save_data", dataModel);
+    // log("TEST : ${dataModel[0].imageUrls.toString()}");
+    log("READ TEST FROM HIVE : ${Hive.box("inbound_database").get("save_data")}");
+
+  }
+
+  bool data_validate(){
+    if(_dobDay == null || _dobYear == null || _dobMonth == null) return false;
+    else if(containerSlController.text.isEmpty) return false;
+    else if(sealNoController.text.isEmpty) return false;
+    else if(wareHouseController.text.isEmpty) return false;
+    else if(materialNoController.text.isEmpty) return false;
+    else if(qytController.text.isEmpty) return false;
+    else if(_barcode==null) return false;
+
+    else return true;
   }
 
 

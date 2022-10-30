@@ -1,13 +1,8 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:cross_file/src/types/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
-import 'package:inbound_flutter/core/model/inbound_data_model.dart';
 import 'package:inbound_flutter/di/dependency_injection.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
 import 'package:inbound_flutter/ui/widget/c_textfield.dart';
@@ -31,7 +26,6 @@ class DashPage extends StatefulWidget {
 class _DashState extends State<DashPage> {
   var imageUtils = di<ImageUtils>();
   var dateTimeUtils = di<DateTimeUtils>();
-  List<DataModel>dataModel = <DataModel>[];
 
   @override
   Widget build(BuildContext context) {
@@ -328,41 +322,10 @@ class _DashState extends State<DashPage> {
                     InkWell(
                       onTap: () async
                       {
-                        List<String> base64List = <String>[];
                         FocusManager.instance.primaryFocus?.unfocus();
-                        DataModel dataModel = DataModel();
-                        dataModel.containerSl = provider.containerSlController.text;
-                        dataModel.sealNo = provider.sealNoController.text;
-                        dataModel.warehouse = provider.wareHouseController.text;
-                        dataModel.materialNo = provider.materialNoController.text;
-                        dataModel.date = "${provider.dobDay ??""}/${provider.dobMonth??""}/${provider.dobYear??""}";
-                        dataModel.reelNo = "barcode";
-                        dataModel.quantity = "1";
-                        dataModel.imageUrls = provider.base64Image;
-                        // for(int i =0;i<provider.listImage.length;i++){
-                        //   List<int> imageBytes = await provider.listImage[i]!.readAsBytes();
-                        //   //print("imageBytes : $imageBytes");
-                        //   String base64Image = base64Encode(imageBytes);
-                        //   base64List.add(base64Image);
-                        //   //print("base64 : $base64Image");
-                        //   //base64List.add(base64Image);
-                        //   //dataModel.imageUrls?.add(base64Image);
-                        // }
-                        //log("BASE : ${base64List}");
-                        //dataModel.imageUrls = base64List;
-                        //dataModel.imageUrls!.add("checking2nd");
-                        //log("DATA MODEL : ${dataModel.toJson().toString()}");
-                        //log("BASE : ${base64List.toString()}");
-                        //dataModel.imageUrls = base64List;
-                        log("DATA MODEL : ${dataModel.toJson().toString()}");
-
-                        // for(int i =0;i<testData.length;i++){
-                        //   DataModel d = DataModel.fromJson(testData[i]);
-                        //   dataModel.add(d);
-                        // }
-                        // Hive.box("inbound_database").put("save_data", dataModel);
-                        // log("TEST : ${dataModel[0].imageUrls.toString()}");
-                        // log("READ TEST FROM HIVE : ${Hive.box("inbound_database").get("save_data")}");
+                        if(provider.data_validate()){
+                          provider.indbound_data();
+                        }
                       },
                       child: Container(
                         height: 50.h,
