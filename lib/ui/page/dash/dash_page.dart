@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
+import 'package:inbound_flutter/core/model/inbound_data_model.dart';
 import 'package:inbound_flutter/di/dependency_injection.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
 import 'package:inbound_flutter/ui/widget/c_textfield.dart';
@@ -324,7 +326,7 @@ class _DashState extends State<DashPage> {
                       {
                         FocusManager.instance.primaryFocus?.unfocus();
                         if(provider.data_validate()){
-                          provider.indbound_data();
+                          provider.indbound_data(context);
                         }
                       },
                       child: Container(

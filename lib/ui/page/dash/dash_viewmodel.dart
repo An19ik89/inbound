@@ -1,7 +1,6 @@
-
-
 import 'dart:convert';
 import 'dart:developer';
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -10,9 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:inbound_flutter/core/model/inbound_data_model.dart';
 
 class DashViewModel with ChangeNotifier {
-
-
-
   // Controller
   TextEditingController containerSlController = TextEditingController();
   TextEditingController sealNoController = TextEditingController();
@@ -26,12 +22,12 @@ class DashViewModel with ChangeNotifier {
   List<XFile?> get listImage => _listImage;
   List<String>? get base64ImageList => _base64ImageList;
   set listImageAdd(XFile? value) {
-    _listImage.add(value) ;
+    _listImage.add(value);
     convertImage(value);
     notifyListeners();
   }
 
-  convertImage(XFile? imageBytes) async{
+  convertImage(XFile? imageBytes) async {
     //List<int> bytes = await imageBytes.readAsBytes();
 
     final bytes = File(imageBytes!.path).readAsBytesSync();
@@ -40,15 +36,15 @@ class DashViewModel with ChangeNotifier {
   }
 
   set listImageRemove(int index) {
-    _listImage.removeAt(index) ;
+    _listImage.removeAt(index);
     _base64ImageList.removeAt(index);
     notifyListeners();
   }
 
   // Date Picker
-  String? _dobDay ;
-  String? _dobMonth ;
-  String? _dobYear ;
+  String? _dobDay;
+  String? _dobMonth;
+  String? _dobYear;
 
   String? get dobDay => _dobDay;
   String? get dobMonth => _dobMonth;
@@ -58,53 +54,70 @@ class DashViewModel with ChangeNotifier {
     _dobDay = value;
     notifyListeners();
   }
+
   set dobMonth(String? value) {
     _dobMonth = value;
     notifyListeners();
   }
+
   set dobYear(String? value) {
     _dobYear = value;
     notifyListeners();
   }
 
-
-
-  String? _barcode ;
+  String? _barcode;
   String? get barcode => _barcode;
   set barcode(String? value) {
-    _barcode = value ;
+    _barcode = value;
     notifyListeners();
   }
 
-  void indbound_data(){
-
+  void indbound_data(context) async {
     DataModel dataModel = DataModel();
     dataModel.containerSl = containerSlController.text;
     dataModel.sealNo = sealNoController.text;
     dataModel.warehouse = wareHouseController.text;
     dataModel.materialNo = materialNoController.text;
-    dataModel.date = "${_dobDay ??""}/${_dobMonth??""}/${_dobYear??""}";
+    dataModel.date = "${_dobDay ?? ""}/${_dobMonth ?? ""}/${_dobYear ?? ""}";
     dataModel.reelNo = "barcode";
     dataModel.quantity = "1";
     dataModel.imageUrls = base64ImageList;
+    _barcode = "mybarcode";
 
-    Hive.box("inbound_database").put("save_data", dataModel);
+    //var box = await Hive.openBox('inbound_database');
+    if (!Hive.box("inbound_database").containsKey(_barcode)) {
+      Hive.box("inbound_database").put(_barcode,dataModel);
+    }
+    else{
+      print("already taken");
+    }
+    //Hive.box("inbound_database").add(dataModel);
     // log("TEST : ${dataModel[0].imageUrls.toString()}");
-    log("READ TEST FROM HIVE : ${Hive.box("inbound_database").get("save_data")}");
-
+    log("READ TEST FROM HIVE : ${Hive.box("inbound_database").length}");
+    DataModel dm = Hive.box("inbound_database").getAt(0);
+    print("${Hive.box("inbound_database").keys}");
+    // for(int i =0;i<Hive.box("inbound_database").length;i++){
+    //   print("${Hive.box("inbound_database").keys}");
+    // }
+    log("READ TEST FROM HIVE : ${dm.materialNo}");
+    final snackBar = SnackBar(
+      content: Text(
+          'Save data length : ${Hive.box("inbound_database").length.toString()}'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  bool data_validate(){
-    if(_dobDay == null || _dobYear == null || _dobMonth == null) return false;
-    else if(containerSlController.text.isEmpty) return false;
-    else if(sealNoController.text.isEmpty) return false;
-    else if(wareHouseController.text.isEmpty) return false;
-    else if(materialNoController.text.isEmpty) return false;
-    else if(qytController.text.isEmpty) return false;
-    else if(_barcode==null) return false;
+  bool data_validate() {
+    // if(_dobDay == null || _dobYear == null || _dobMonth == null) return false;
+    // else if(containerSlController.text.isEmpty) return false;
+    // else if(sealNoController.text.isEmpty) return false;
+    // else if(wareHouseController.text.isEmpty) return false;
+    // else if(materialNoController.text.isEmpty) return false;
+    // else if(qytController.text.isEmpty) return false;
+    // else if(_barcode==null) return false;
+    //
+    // else return true;
 
-    else return true;
+    return true;
   }
-
-
 }
