@@ -107,17 +107,27 @@ class DashViewModel with ChangeNotifier {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  bool data_validate() {
-    // if(_dobDay == null || _dobYear == null || _dobMonth == null) return false;
-    // else if(containerSlController.text.isEmpty) return false;
-    // else if(sealNoController.text.isEmpty) return false;
-    // else if(wareHouseController.text.isEmpty) return false;
-    // else if(materialNoController.text.isEmpty) return false;
-    // else if(qytController.text.isEmpty) return false;
-    // else if(_barcode==null) return false;
-    //
-    // else return true;
+  String data_validate() {
+    if(_dobDay == null || _dobYear == null || _dobMonth == null) return 'Select date';
+    else if(containerSlController.text.isEmpty) return 'Container is empty';
+    else if(sealNoController.text.isEmpty) return 'Seal no is empty';
+    else if(wareHouseController.text.isEmpty) return 'Warehouse is empty';
+    else if(materialNoController.text.isEmpty) return 'Material is empty';
+    else if(qytController.text.isEmpty) return 'Quantity is empty';
+    else if(_barcode==null) return 'Barcode is emply';
 
-    return true;
+    else return '';
+
+  }
+
+
+  // Drawer Side menu
+
+  bool _isSwitchedHoneyWell = false ;
+  bool get isSwitchedHoneyWell => _isSwitchedHoneyWell;
+
+  set isSwitchedHoneyWell(bool value) {
+    _isSwitchedHoneyWell = value;
+    notifyListeners();
   }
 }

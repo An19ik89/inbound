@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
-import 'package:inbound_flutter/core/model/inbound_data_model.dart';
+import 'package:inbound_flutter/core/route/route_paths.dart';
 import 'package:inbound_flutter/di/dependency_injection.dart';
+import 'package:inbound_flutter/ui/page/qr_scan/qr_scan.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
 import 'package:inbound_flutter/ui/widget/c_textfield.dart';
 import 'package:inbound_flutter/utils/date_time_utils.dart';
@@ -28,6 +30,7 @@ class DashPage extends StatefulWidget {
 class _DashState extends State<DashPage> {
   var imageUtils = di<ImageUtils>();
   var dateTimeUtils = di<DateTimeUtils>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -228,6 +231,9 @@ class _DashState extends State<DashPage> {
                     InkWell(
                       onTap: () {
                         FocusManager.instance.primaryFocus?.unfocus();
+                        if(!provider.isSwitchedHoneyWell) {
+                          Navigator.of(context).pushNamed(RoutePaths.QRSCAN);
+                        }
                       },
                       child: Container(
                         height: 50.h,
@@ -325,8 +331,10 @@ class _DashState extends State<DashPage> {
                       onTap: () async
                       {
                         FocusManager.instance.primaryFocus?.unfocus();
-                        if(provider.data_validate()){
+                        if(provider.data_validate() == ''){
                           provider.indbound_data(context);
+                        }else{
+                          alertDialog(provider.data_validate());
                         }
                       },
                       child: Container(
@@ -368,8 +376,16 @@ class _DashState extends State<DashPage> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.book),
-                    title: const Text(' My Course '),
+                    leading: Icon(Icons.devices,),
+                    title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [CText(text:' Honey Well ',size: 14.5.sp,), CupertinoSwitch(
+
+                        activeColor: ColorRes.green_08BA64,
+                        trackColor: ColorRes.white_66EFEFEF,
+                        value: provider.isSwitchedHoneyWell,
+                        onChanged: (v) {
+                          provider.isSwitchedHoneyWell = v;
+                        }),],),
                     onTap: () {
                       Navigator.pop(context);
                     },
@@ -407,36 +423,33 @@ class _DashState extends State<DashPage> {
           )),
     );
   }
+
+  alertDialog(String value){
+
+    showDialog(
+        context: context,
+
+        builder: (BuildContext context) {
+          return  AlertDialog(
+            title:  CText(
+              text: 'Error Result',
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+              size: 20.sp,
+              fontFamily: FontRes.bold,
+            ),
+            content:  CText(
+              text: value,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+              size: 18.sp,
+              fontFamily: FontRes.regular,
+            ),
+
+          );});
+  }
+
 }
 
-var testData =
-[
-  {
-    "serial_no": "F4ottWBnCpM",
-    "date": "date",
-    "container_sl": "F",
-    "warehouse": "w",
-    "material_no": "m",
-    "reel_no": "r",
-    "quantity": "q",
-    "imageUrls": [
-      "https://images.unsplash.com/photo-1648737966636-2fc3a5fffc8a?ixid=MnwzMzQyMjN8MXwxfGFsbHwxfHx8fHx8Mnx8MTY1NDE4NDQ4MQ&ixlib=rb-1.2.1",
-      "https://images.unsplash.com/photo-1648737966636-2fc3a5fffc8a?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMzQyMjN8MXwxfGFsbHwxfHx8fHx8Mnx8MTY1NDE4NDQ4MQ&ixlib=rb-1.2.1&q=80"
-    ],
-  },
-  {
-    "serial_no": "F4ottWBnCpK",
-    "date": "date",
-    "container_sl": "F",
-    "warehouse": "w",
-    "material_no": "m",
-    "reel_no": "r",
-    "quantity": "q",
-    "imageUrls": [
-      "https://images.unsplash.com/photo-1648737966636-2fc3a5fffc8a?ixid=MnwzMzQyMjN8MXwxfGFsbHwxfHx8fHx8Mnx8MTY1NDE4NDQ4MQ&ixlib=rb-1.2.1",
-      "https://images.unsplash.com/photo-1648737966636-2fc3a5fffc8a?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMzQyMjN8MXwxfGFsbHwxfHx8fHx8Mnx8MTY1NDE4NDQ4MQ&ixlib=rb-1.2.1&q=80",
-    ],
-  },
-];
 
 
