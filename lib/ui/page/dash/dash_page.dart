@@ -31,6 +31,7 @@ class DashPage extends StatefulWidget {
 class _DashState extends State<DashPage> {
   var imageUtils = di<ImageUtils>();
   var dateTimeUtils = di<DateTimeUtils>();
+  var excelUtils = di<ExcelUtils>();
 
 
   @override
@@ -395,8 +396,7 @@ class _DashState extends State<DashPage> {
                     leading: Icon(Icons.import_export_outlined),
                     title: CText(text:'Export',size: 14.5.sp,),
                     onTap: () {
-                      ExcelUtils s =ExcelUtils();
-                      s.createExcel();
+                      excelUtils.createExcel();
                       Navigator.pop(context);
                     },
                   ),

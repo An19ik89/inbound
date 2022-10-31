@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:inbound_flutter/core/model/inbound_data_model.dart';
 import 'package:inbound_flutter/ui/page/qr_scan/qr_scan.dart';
+import 'package:inbound_flutter/utils/excel_utils.dart';
 import 'package:inbound_flutter/utils/image_utils.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -35,6 +36,7 @@ Future<void> setup() async {
   //utils
   di.registerSingleton(ImageUtils());
   di.registerSingleton(DateTimeUtils());
+  di.registerSingleton(ExcelUtils());
 
 
 }
