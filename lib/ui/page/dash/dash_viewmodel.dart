@@ -84,29 +84,21 @@ class DashViewModel with ChangeNotifier {
     dataModel.quantity = qytController.text;
     dataModel.imageUrls = base64ImageList;
 
-
-    //var box = await Hive.openBox('inbound_database');
     if (!Hive.box("inbound_database").containsKey(_barcode)) {
-      Hive.box("inbound_database").put(_barcode,dataModel);
+      Hive.box("inbound_database").put(_barcode,dataModel).then((_)  {
+          data_clear();
+      });
     }
     else{
-      print("already taken");
-    }
-    //Hive.box("inbound_database").add(dataModel);
-    // log("TEST : ${dataModel[0].imageUrls.toString()}");
-    log("READ TEST FROM HIVE : ${Hive.box("inbound_database").length}");
-    DataModel dm = Hive.box("inbound_database").getAt(0);
-    print("${Hive.box("inbound_database").keys}");
-    // for(int i =0;i<Hive.box("inbound_database").length;i++){
-    //   print("${Hive.box("inbound_database").keys}");
-    // }
 
-    log("READ TEST FROM HIVE : ${dm.materialNo}");
-    final snackBar = SnackBar(
-      content: Text(
-          'Save data length : ${Hive.box("inbound_database").length.toString()}'),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      final snackBar = SnackBar(
+        content: Text(
+            'Barcode already been used !'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+
+
   }
 
   String data_validate() {
@@ -133,10 +125,16 @@ class DashViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-
-  // QRScan
-
-  Barcode? result;
-  QRViewController? controller;
+  void data_clear(){
+    _dobDay = null;
+    _dobMonth = null;
+    _dobYear = null;
+    containerSlController.clear();
+    sealNoController.clear();
+    wareHouseController.clear();
+    materialNoController.clear();
+    qytController.clear();
+    _barcode = null;
+  }
 
 }

@@ -7,11 +7,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 
 class ExcelUtils{
-  Future<void> createExcel() async {
+  Future<void> createExcel(String file_name) async {
     //Create a Excel document.
-
-    print('Entering');
-
     final Workbook workbook = Workbook();
     final Worksheet worksheet = workbook.worksheets[0];
   // Excel range initializing
@@ -60,34 +57,20 @@ class ExcelUtils{
         worksheet.getRangeByIndex(i,8).setValue(dm.reelNo);
         worksheet.getRangeByIndex(i,9).setValue(dm.quantity);
         for(int j = 0;j<dm.imageUrls!.length;j++){
-          worksheet.getRangeByIndex(i,j+10).rowHeight = 115;
+          worksheet.getRangeByIndex(i,j+10).rowHeight = 110;
           worksheet.pictures.addBase64(i, j+10, dm.imageUrls![j]);
         }
         i++;
     }
 
-
-    // for(int i=0;i<Hive.box("inbound_database").length;i++){
-    //   DataModel dm = Hive.box("inbound_database").getAt(i);
-    //   worksheet.getRangeByIndex(i+1,1).setValue(dm.date);
-    //   worksheet.getRangeByIndex(i+1,2).setValue((i+1).toString());
-    //   worksheet.getRangeByIndex(i+1,3).setValue(dm.containerSl);
-    //   worksheet.getRangeByIndex(i+1,4).setValue(dm.sealNo);
-    //   worksheet.getRangeByIndex(i+1,5).setValue(dm.warehouse);
-    //   worksheet.getRangeByIndex(i+1,6).setValue(dm.materialNo);
-    //   worksheet.getRangeByIndex(i+1,7).setValue(dm.reelNo);
-    //   worksheet.getRangeByIndex(i+1,8).setValue(dm.reelNo);
-    //   worksheet.getRangeByIndex(i+1,9).setValue(dm.quantity);
-    //   for(int j=0;j<dm.imageUrls!.length;j++){
-    //     worksheet.getRangeByIndex(i+1,10).setValue(dm);
-    //   }
-    // }
-
     //Save and launch the excel.
     final List<int> bytes = workbook.saveAsStream();
     //Dispose the document.
     workbook.dispose();
-  File('storage/emulated/0/Download/'+'Output.xlsx').writeAsBytes(bytes).then((value) => print(value.path));
+  File('storage/emulated/0/Download/'+file_name+'.xlsx').writeAsBytes(bytes).then((value) {
+    print(value);
+    // Hive.box("inbound_database").clear();
+  });
 
   }
 

@@ -5,9 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
 import 'package:inbound_flutter/core/route/route_paths.dart';
 import 'package:inbound_flutter/di/dependency_injection.dart';
-import 'package:inbound_flutter/ui/page/qr_scan/qr_scan.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
 import 'package:inbound_flutter/ui/widget/c_textfield.dart';
 import 'package:inbound_flutter/utils/date_time_utils.dart';
@@ -399,39 +399,25 @@ class _DashState extends State<DashPage> {
                     onTap: () async{
 
 
-                      var status = await Permission.storage.status;
-                      print("STATUS : $status");
-                      if (status.isDenied) {
-                        // You can request multiple permissions at once.
+
                         Map<Permission, PermissionStatus> statuses = await [
                           Permission.storage,
                         ].request();
                         if(statuses[Permission.storage].toString() == "PermissionStatus.granted"){
-                              excelUtils.createExcel();
+                            if(Hive.box("inbound_database").length > 0) {
+                              excelUtils.createExcel('Hello');
                               Navigator.pop(context);
+                            }else{
+                              alertDialog("No Data Available");
+                            }
                         }
                         else{
                           alertDialog("We need to request your permission to read ");
-                        }// it should print PermissionStatus.granted
-                      }
+                        }
 
-                      if(status.isGranted){
-                        excelUtils.createExcel();
-                        Navigator.pop(context);
-                      }
-                      else{
-                        alertDialog("We need to request your permission to read ");
-                      }
 
-                      // provider.requestFilePermission().then((value){
-                      //   if(value){
-                      //     excelUtils.createExcel();
-                      //     Navigator.pop(context);
-                      //   }
-                      //   else{
-                      //     alertDialog("We need to request your permission to read ");
-                      //   }
-                      // });
+
+
 
                     },
                   ),
@@ -487,6 +473,7 @@ class _DashState extends State<DashPage> {
 
           );});
   }
+
 }
 
 
