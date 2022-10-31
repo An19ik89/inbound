@@ -11,11 +11,12 @@ class CText extends StatelessWidget {
   final double? container_wight;
   final double? size;
   final String? fontFamily;
+  final int? maxLines;
 
 
   const CText(
       {Key? key,
-        required this.text, this.textAlign, this.color, this.fontWeight, this.container_wight, this.size, this.fontFamily,})
+        required this.text, this.textAlign, this.color, this.fontWeight, this.container_wight, this.size, this.fontFamily,this.maxLines})
       : super(key: key);
 
   @override
@@ -24,7 +25,7 @@ class CText extends StatelessWidget {
       width: container_wight ,
       child: Text(
         text ?? '',
-        maxLines: 1,
+        maxLines: maxLines ?? 1,
         textAlign: textAlign ?? TextAlign.start,
         style: TextStyle(
           fontFamily: fontFamily ?? FontRes.medium,

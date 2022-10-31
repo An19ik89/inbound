@@ -163,7 +163,7 @@ class _QRScanState extends State<QRScan> {
             actions: [
               ElevatedButton(
                 style:
-                    ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                    ElevatedButton.styleFrom(primary: Colors.redAccent),
                 onPressed: () {
                   Navigator.of(context).pop();
                   controller!.resumeCamera();
@@ -178,7 +178,7 @@ class _QRScanState extends State<QRScan> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorRes.green_08BA64),
+                    primary: ColorRes.green_08BA64),
                 onPressed: () {
                   provider.barcode = result?.code ?? null;
                   Navigator.of(context).pop();

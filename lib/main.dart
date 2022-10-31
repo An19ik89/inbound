@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
           builder: (context, child) {
             return MaterialApp(
               title: 'Flutter MVVM',
+              debugShowCheckedModeBanner: true,
               theme: ThemeData(
                 primarySwatch: Colors.amber,
                 visualDensity: VisualDensity.adaptivePlatformDensity,

@@ -17,6 +17,7 @@ import 'package:inbound_flutter/utils/res/color_res.dart';
 import 'package:inbound_flutter/utils/res/font_res.dart';
 import 'package:inbound_flutter/utils/res/image_res.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'dash_viewmodel.dart';
@@ -395,9 +396,35 @@ class _DashState extends State<DashPage> {
                   ListTile(
                     leading: Icon(Icons.import_export_outlined),
                     title: CText(text:'Export',size: 14.5.sp,),
-                    onTap: () {
-                      excelUtils.createExcel();
-                      Navigator.pop(context);
+                    onTap: () async{
+
+
+                      var status = await Permission.storage.status;
+                      print("STATUS : $status");
+                      if (status.isDenied) {
+                        // You can request multiple permissions at once.
+                        Map<Permission, PermissionStatus> statuses = await [
+                          Permission.storage,
+                        ].request();
+                        if(statuses[Permission.storage].toString() == "PermissionStatus.granted"){
+                              excelUtils.createExcel();
+                              Navigator.pop(context);
+                        }
+                        else{
+                          alertDialog("We need to request your permission to read ");
+                        }// it should print PermissionStatus.granted
+                      }
+
+                      // provider.requestFilePermission().then((value){
+                      //   if(value){
+                      //     excelUtils.createExcel();
+                      //     Navigator.pop(context);
+                      //   }
+                      //   else{
+                      //     alertDialog("We need to request your permission to read ");
+                      //   }
+                      // });
+
                     },
                   ),
                   ListTile(
@@ -446,12 +473,12 @@ class _DashState extends State<DashPage> {
               fontWeight: FontWeight.w500,
               color: Colors.black,
               size: 18.sp,
+              maxLines: 2,
               fontFamily: FontRes.regular,
             ),
 
           );});
   }
-
 }
 
 

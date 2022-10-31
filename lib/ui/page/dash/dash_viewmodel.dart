@@ -80,10 +80,10 @@ class DashViewModel with ChangeNotifier {
     dataModel.warehouse = wareHouseController.text;
     dataModel.materialNo = materialNoController.text;
     dataModel.date = "${_dobDay ?? ""}/${_dobMonth ?? ""}/${_dobYear ?? ""}";
-    dataModel.reelNo = "barcode";
-    dataModel.quantity = "1";
+    dataModel.reelNo = _barcode;
+    dataModel.quantity = qytController.text;
     dataModel.imageUrls = base64ImageList;
-    _barcode = "mybarcode";
+
 
     //var box = await Hive.openBox('inbound_database');
     if (!Hive.box("inbound_database").containsKey(_barcode)) {
@@ -100,6 +100,7 @@ class DashViewModel with ChangeNotifier {
     // for(int i =0;i<Hive.box("inbound_database").length;i++){
     //   print("${Hive.box("inbound_database").keys}");
     // }
+
     log("READ TEST FROM HIVE : ${dm.materialNo}");
     final snackBar = SnackBar(
       content: Text(
@@ -137,4 +138,5 @@ class DashViewModel with ChangeNotifier {
 
   Barcode? result;
   QRViewController? controller;
+
 }
