@@ -18,18 +18,15 @@ class QRScan extends StatefulWidget {
 }
 
 class _QRScanState extends State<QRScan> {
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   QRViewController? controller;
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
-  // In order to get hot reload to work we need to pause the camera if the platform
-  // is android, or resume the camera if the platform is iOS.
   @override
   void reassemble() {
     super.reassemble();
     if (Platform.isAndroid) {
       controller!.pauseCamera();
-
     }
     controller!.resumeCamera();
   }
@@ -38,100 +35,77 @@ class _QRScanState extends State<QRScan> {
   Widget build(BuildContext context) {
     var provider = Provider.of<DashViewModel>(context);
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(flex: 4, child: _buildQrView(context,provider)),
-          Expanded(
-            flex: 1,
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              await controller?.toggleFlash();
-                              setState(() {});
-                            },
-                            child: FutureBuilder(
-                              future: controller?.getFlashStatus(),
-                              builder: (context, snapshot) {
-                                return Text('Flash: ${snapshot.data}');
-                              },
-                            )),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              await controller?.flipCamera();
-                              setState(() {});
-                            },
-                            child: FutureBuilder(
-                              future: controller?.getCameraInfo(),
-                              builder: (context, snapshot) {
-                                if (snapshot.data != null) {
-                                  return Text(
-                                      'Camera facing ${describeEnum(snapshot.data!)}');
-                                } else {
-                                  return const Text('loading');
-                                }
-                              },
-                            )),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.pauseCamera();
-                          },
-                          child: const Text('pause',
-                              style: TextStyle(fontSize: 20)),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.resumeCamera();
-                          },
-                          child: const Text('resume',
-                              style: TextStyle(fontSize: 20)),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+      body: Stack(
+        children: [
+          _buildQrView(context, provider),
+          Positioned(
+            top: 40.h,
+            right: 30.w,
+            child: InkWell(
+              onTap: () async {
+                await controller?.flipCamera();
+              },
+              child: Icon(
+                Icons.flip_camera_android_outlined,
+                color: Colors.white,
+                size: 40.r,
               ),
             ),
-          )
+          ),
+          Positioned(
+              bottom: 20.h,
+              right: 0,
+              left: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      await controller?.pauseCamera();
+                    },
+                    child: Icon(
+                      Icons.pause,
+                      color: Colors.white,
+                      size: 30.r,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      await controller?.resumeCamera();
+                    },
+                    child: Icon(
+                      Icons.camera,
+                      color: Colors.white,
+                      size: 50.r,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      await controller?.toggleFlash();
+                    },
+                    child: Icon(
+                      Icons.flash_on,
+                      color: Colors.white,
+                      size: 30.r,
+                    ),
+                  )
+                ],
+              ))
         ],
       ),
     );
   }
 
-  Widget _buildQrView(BuildContext context,DashViewModel provider) {
+  Widget _buildQrView(BuildContext context, DashViewModel provider) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
-    var scanArea = (MediaQuery.of(context).size.width < 400 ||
-        MediaQuery.of(context).size.height < 400)
+    var scanArea = (MediaQuery.of(context).size.width < 400.h ||
+            MediaQuery.of(context).size.height < 400.h)
         ? 300.0.w
         : 300.0.w;
 
     return QRView(
       key: qrKey,
-      onQRViewCreated:(ctrl) => _onQRViewCreated(ctrl,provider),
+      onQRViewCreated: (ctrl) => _onQRViewCreated(ctrl, provider),
       overlay: QrScannerOverlayShape(
           borderColor: Colors.red,
           borderRadius: 10.r,
@@ -142,21 +116,16 @@ class _QRScanState extends State<QRScan> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller,DashViewModel provider) {
-
-      this.controller = controller;
+  void _onQRViewCreated(QRViewController controller, DashViewModel provider) {
+    this.controller = controller;
 
     controller.scannedDataStream.listen((scanData) {
-
-        result = scanData;
-        alertDialog(provider);
-
-
+      result = scanData;
+      alertDialog(provider);
     });
   }
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
-    // log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('no Permission')),
@@ -170,62 +139,61 @@ class _QRScanState extends State<QRScan> {
     super.dispose();
   }
 
-  alertDialog(DashViewModel provider){
+  alertDialog(DashViewModel provider) {
     controller!.pauseCamera();
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-      return  AlertDialog(
-      title:  CText(
-        text: 'Scan Result',
-        fontWeight: FontWeight.w700,
-        color: Colors.black,
-        size: 20.sp,
-        fontFamily: FontRes.bold,
-      ),
-      content:  CText(
-            text: result?.code ??'',
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-            size: 18.sp,
-            fontFamily: FontRes.regular,
-          ),
-      actions: [
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-            controller!.resumeCamera();
-          },
-          child: CText(
-            text: 'Cancel',
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-            size: 16.sp,
-            fontFamily: FontRes.medium,
-          ),
-        ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-          backgroundColor: ColorRes.green_08BA64
-          ),
-          onPressed: () {
-            provider.barcode = result?.code ?? null;
-            Navigator.of(context).pop();
-            Navigator.of(context).pop();
-          },
-          child: CText(
-            text: 'Accept',
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-            size: 16.sp,
-            fontFamily: FontRes.medium,
-          ),
-        ),
-      ],
-    );});
+          return AlertDialog(
+            title: CText(
+              text: 'Scan Result',
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+              size: 20.sp,
+              fontFamily: FontRes.bold,
+            ),
+            content: CText(
+              text: result?.code ?? '',
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+              size: 18.sp,
+              fontFamily: FontRes.regular,
+            ),
+            actions: [
+              ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  controller!.resumeCamera();
+                },
+                child: CText(
+                  text: 'Cancel',
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  size: 16.sp,
+                  fontFamily: FontRes.medium,
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorRes.green_08BA64),
+                onPressed: () {
+                  provider.barcode = result?.code ?? null;
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                child: CText(
+                  text: 'Accept',
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  size: 16.sp,
+                  fontFamily: FontRes.medium,
+                ),
+              ),
+            ],
+          );
+        });
   }
 }

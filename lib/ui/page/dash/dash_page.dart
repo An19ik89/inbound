@@ -11,6 +11,7 @@ import 'package:inbound_flutter/ui/page/qr_scan/qr_scan.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
 import 'package:inbound_flutter/ui/widget/c_textfield.dart';
 import 'package:inbound_flutter/utils/date_time_utils.dart';
+import 'package:inbound_flutter/utils/excel_utils.dart';
 import 'package:inbound_flutter/utils/image_utils.dart';
 import 'package:inbound_flutter/utils/res/color_res.dart';
 import 'package:inbound_flutter/utils/res/font_res.dart';
@@ -55,9 +56,9 @@ class _DashState extends State<DashPage> {
                     Scaffold.of(context).openDrawer();
                   },
                   icon: Icon(
-                    Icons.menu,
+                    Icons.menu_outlined,
                     color: Colors.white,
-                    size: 22.r,
+                    size: 25.r,
                   ))),
               actions: [
                 IconButton(
@@ -65,7 +66,7 @@ class _DashState extends State<DashPage> {
                     icon: Icon(
                       Icons.settings,
                       color: Colors.white,
-                      size: 22.r,
+                      size: 25.r,
                     ))
               ],
             ),
@@ -158,7 +159,7 @@ class _DashState extends State<DashPage> {
                             child: CTextField(
                                 hint_text: 'Container Sl',
                                 controller: provider.containerSlController,
-                                textInputType: TextInputType.number))
+                                textInputType: TextInputType.text))
                       ],
                     ),
                     SizedBox(
@@ -174,7 +175,7 @@ class _DashState extends State<DashPage> {
                             child: CTextField(
                                 hint_text: 'Seal No.',
                                 controller: provider.sealNoController,
-                                textInputType: TextInputType.number))
+                                textInputType: TextInputType.text))
                       ],
                     ),
                     SizedBox(
@@ -370,7 +371,7 @@ class _DashState extends State<DashPage> {
                   ),
                   ListTile(
                     leading: Icon(Icons.person),
-                    title: CText(text:' My Profile ',size: 14.5.sp,),
+                    title: CText(text:'My Profile',size: 14.5.sp,),
                     onTap: () {
                       Navigator.pop(context);
                     },
@@ -378,7 +379,7 @@ class _DashState extends State<DashPage> {
                   ListTile(
                     leading: Icon(Icons.devices,),
                     title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [CText(text:' Honey Well ',size: 14.5.sp,), CupertinoSwitch(
+                      children: [CText(text:'Honey Well',size: 14.5.sp,), CupertinoSwitch(
 
                         activeColor: ColorRes.green_08BA64,
                         trackColor: ColorRes.white_66EFEFEF,
@@ -391,9 +392,11 @@ class _DashState extends State<DashPage> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.workspace_premium),
-                    title: const Text(' Go Premium '),
+                    leading: Icon(Icons.import_export_outlined),
+                    title: CText(text:'Export',size: 14.5.sp,),
                     onTap: () {
+                      ExcelUtils s =ExcelUtils();
+                      s.createExcel();
                       Navigator.pop(context);
                     },
                   ),

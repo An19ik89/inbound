@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inbound_flutter/core/model/inbound_data_model.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class DashViewModel with ChangeNotifier {
   // Controller
@@ -130,4 +131,10 @@ class DashViewModel with ChangeNotifier {
     _isSwitchedHoneyWell = value;
     notifyListeners();
   }
+
+
+  // QRScan
+
+  Barcode? result;
+  QRViewController? controller;
 }
