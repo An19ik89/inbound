@@ -415,6 +415,14 @@ class _DashState extends State<DashPage> {
                         }// it should print PermissionStatus.granted
                       }
 
+                      if(status.isGranted){
+                        excelUtils.createExcel();
+                        Navigator.pop(context);
+                      }
+                      else{
+                        alertDialog("We need to request your permission to read ");
+                      }
+
                       // provider.requestFilePermission().then((value){
                       //   if(value){
                       //     excelUtils.createExcel();

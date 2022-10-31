@@ -10,6 +10,8 @@ class ExcelUtils{
   Future<void> createExcel() async {
     //Create a Excel document.
 
+    print('Entering');
+
     final Workbook workbook = Workbook();
     final Worksheet worksheet = workbook.worksheets[0];
   // Excel range initializing
@@ -22,11 +24,11 @@ class ExcelUtils{
     worksheet.getRangeByIndex(1,7).columnWidth = 10;
     worksheet.getRangeByIndex(1,8).columnWidth = 10;
     worksheet.getRangeByIndex(1,9).columnWidth = 10;
-    worksheet.getRangeByIndex(1,10).columnWidth = 50;
-    worksheet.getRangeByIndex(1,11).columnWidth = 50;
-    worksheet.getRangeByIndex(1,12).columnWidth = 50;
-    worksheet.getRangeByIndex(1,13).columnWidth = 50;
-    worksheet.getRangeByIndex(1,14).columnWidth = 50;
+    worksheet.getRangeByIndex(1,10).columnWidth = 17;
+    worksheet.getRangeByIndex(1,11).columnWidth = 17;
+    worksheet.getRangeByIndex(1,12).columnWidth = 17;
+    worksheet.getRangeByIndex(1,13).columnWidth = 17;
+    worksheet.getRangeByIndex(1,14).columnWidth = 17;
 
   // Excel header
     worksheet.getRangeByIndex(1,1).setText('Date');
@@ -58,6 +60,7 @@ class ExcelUtils{
         worksheet.getRangeByIndex(i,8).setValue(dm.reelNo);
         worksheet.getRangeByIndex(i,9).setValue(dm.quantity);
         for(int j = 0;j<dm.imageUrls!.length;j++){
+          worksheet.getRangeByIndex(i,j+10).rowHeight = 115;
           worksheet.pictures.addBase64(i, j+10, dm.imageUrls![j]);
         }
         i++;
