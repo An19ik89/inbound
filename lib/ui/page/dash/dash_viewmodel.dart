@@ -16,6 +16,7 @@ class DashViewModel with ChangeNotifier {
   TextEditingController wareHouseController = TextEditingController();
   TextEditingController materialNoController = TextEditingController();
   TextEditingController qytController = TextEditingController();
+  TextEditingController fileNameController = TextEditingController();
 
   // Image Picking
   List<XFile?> _listImage = [];
@@ -135,6 +136,9 @@ class DashViewModel with ChangeNotifier {
     materialNoController.clear();
     qytController.clear();
     _barcode = null;
+    _listImage.clear();
+    _base64ImageList.clear();
+    notifyListeners();
   }
 
 }

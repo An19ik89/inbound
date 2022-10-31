@@ -34,14 +34,13 @@ class ExcelUtils{
     worksheet.getRangeByIndex(1,4).setText('Seal No.');
     worksheet.getRangeByIndex(1,5).setText('Warehouse');
     worksheet.getRangeByIndex(1,6).setText('Material No');
-    worksheet.getRangeByIndex(1,7).setText('Reel No');
-    worksheet.getRangeByIndex(1,8).setText('Reel No/barcode');
-    worksheet.getRangeByIndex(1,9).setText('QYT(M)');
-    worksheet.getRangeByIndex(1,10).setText('Pic 1');
-    worksheet.getRangeByIndex(1,11).setText('Pic 2');
-    worksheet.getRangeByIndex(1,12).setText('Pic 3');
-    worksheet.getRangeByIndex(1,13).setText('Pic 4');
-    worksheet.getRangeByIndex(1,14).setText('Pic 5');
+    worksheet.getRangeByIndex(1,7).setText('Reel No/barcode');
+    worksheet.getRangeByIndex(1,8).setText('QYT(M)');
+    worksheet.getRangeByIndex(1,9).setText('Pic 1');
+    worksheet.getRangeByIndex(1,10).setText('Pic 2');
+    worksheet.getRangeByIndex(1,11).setText('Pic 3');
+    worksheet.getRangeByIndex(1,12).setText('Pic 4');
+    worksheet.getRangeByIndex(1,13).setText('Pic 5');
     int i=2;
     for(String key in Hive.box("inbound_database").keys)
     {
@@ -54,11 +53,10 @@ class ExcelUtils{
         worksheet.getRangeByIndex(i,5).setValue(dm.warehouse);
         worksheet.getRangeByIndex(i,6).setValue(dm.materialNo);
         worksheet.getRangeByIndex(i,7).setValue(dm.reelNo);
-        worksheet.getRangeByIndex(i,8).setValue(dm.reelNo);
-        worksheet.getRangeByIndex(i,9).setValue(dm.quantity);
+        worksheet.getRangeByIndex(i,8).setValue(dm.quantity);
         for(int j = 0;j<dm.imageUrls!.length;j++){
-          worksheet.getRangeByIndex(i,j+10).rowHeight = 110;
-          worksheet.pictures.addBase64(i, j+10, dm.imageUrls![j]);
+          worksheet.getRangeByIndex(i,j+9).rowHeight = 110;
+          worksheet.pictures.addBase64(i, j+9, dm.imageUrls![j]);
         }
         i++;
     }

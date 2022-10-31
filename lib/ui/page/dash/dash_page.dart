@@ -34,14 +34,13 @@ class _DashState extends State<DashPage> {
   var dateTimeUtils = di<DateTimeUtils>();
   var excelUtils = di<ExcelUtils>();
 
-
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<DashViewModel>(context);
     return Container(
       color: Colors.amber,
-      child:  SafeArea(
-        bottom: false,
+      child: SafeArea(
+          bottom: false,
           child: Scaffold(
             backgroundColor: ColorRes.white_F7F7F7,
             drawerEnableOpenDragGesture: false,
@@ -53,15 +52,16 @@ class _DashState extends State<DashPage> {
                 size: 18.sp,
                 fontFamily: FontRes.bold,
               ),
-              leading: Builder(builder: (context) =>   IconButton(
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                  icon: Icon(
-                    Icons.menu_outlined,
-                    color: Colors.white,
-                    size: 25.r,
-                  ))),
+              leading: Builder(
+                  builder: (context) => IconButton(
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                      icon: Icon(
+                        Icons.menu_outlined,
+                        color: Colors.white,
+                        size: 25.r,
+                      ))),
               actions: [
                 IconButton(
                     onPressed: () {},
@@ -72,7 +72,6 @@ class _DashState extends State<DashPage> {
                     ))
               ],
             ),
-
             body: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
@@ -82,7 +81,9 @@ class _DashState extends State<DashPage> {
                     InkWell(
                       onTap: () {
                         FocusManager.instance.primaryFocus?.unfocus();
-                        dateTimeUtils.selectDateFromPicker(context).then((value) {
+                        dateTimeUtils
+                            .selectDateFromPicker(context)
+                            .then((value) {
                           if (value != null) {
                             provider.dobDay =
                                 DateFormat('dd').format(value).toString();
@@ -112,13 +113,11 @@ class _DashState extends State<DashPage> {
                                   : Colors.grey,
                               textAlign: TextAlign.center,
                             ),
-
                             Container(
                               height: 20.h,
                               width: 1.09.w,
                               color: Colors.grey,
                             ),
-
                             CText(
                               text: provider.dobMonth ?? 'month',
                               color: provider.dobMonth != null
@@ -126,13 +125,11 @@ class _DashState extends State<DashPage> {
                                   : Colors.grey,
                               textAlign: TextAlign.center,
                             ),
-
                             Container(
                               height: 20.h,
                               width: 1.09.w,
                               color: Colors.grey,
                             ),
-
                             CText(
                               text: provider.dobYear ?? 'year',
                               color: provider.dobYear != null
@@ -143,8 +140,10 @@ class _DashState extends State<DashPage> {
                           ],
                         ),
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.amber, width: 0.5.r),
-                            borderRadius: BorderRadius.all(Radius.circular(12.5.r)),
+                            border:
+                                Border.all(color: Colors.amber, width: 0.5.r),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12.5.r)),
                             color: Colors.white),
                       ),
                     ),
@@ -234,7 +233,7 @@ class _DashState extends State<DashPage> {
                     InkWell(
                       onTap: () {
                         FocusManager.instance.primaryFocus?.unfocus();
-                        if(!provider.isSwitchedHoneyWell) {
+                        if (!provider.isSwitchedHoneyWell) {
                           Navigator.of(context).pushNamed(RoutePaths.QRSCAN);
                         }
                       },
@@ -262,12 +261,15 @@ class _DashState extends State<DashPage> {
                       alignment: Alignment.center,
                       child: CText(
                         text: provider.barcode ?? 'Barcode empty',
-                        color: provider.barcode != null ? Colors.black : Colors.grey,
+                        color: provider.barcode != null
+                            ? Colors.black
+                            : Colors.grey,
                         textAlign: TextAlign.center,
                       ),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey, width: 0.5.r),
-                          borderRadius: BorderRadius.all(Radius.circular(12.5.r)),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(12.5.r)),
                           color: Colors.white),
                     ),
                     SizedBox(
@@ -277,8 +279,8 @@ class _DashState extends State<DashPage> {
                       onTap: () {
                         FocusManager.instance.primaryFocus?.unfocus();
                         imageUtils.pickCameraImage().then((value) => {
-                          if (value != null) {provider.listImageAdd = value}
-                        });
+                              if (value != null) {provider.listImageAdd = value}
+                            });
                       },
                       child: Container(
                         height: 50.h,
@@ -308,11 +310,12 @@ class _DashState extends State<DashPage> {
                           return Container(
                             margin: EdgeInsets.only(left: 8.w),
                             child: InkWell(
-                              onLongPress: (){
+                              onLongPress: () {
                                 provider.listImageRemove = index;
                               },
                               child: ClipRRect(
-                                borderRadius: const BorderRadius.all(Radius.circular(12.5)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(12.5)),
                                 child: Image.file(
                                   File(provider.listImage[index]!.path),
                                   height: 100.r,
@@ -325,18 +328,15 @@ class _DashState extends State<DashPage> {
                         },
                       ),
                     ),
-
                     SizedBox(
                       height: 13.h,
                     ),
-
                     InkWell(
-                      onTap: () async
-                      {
+                      onTap: () async {
                         FocusManager.instance.primaryFocus?.unfocus();
-                        if(provider.data_validate() == ''){
+                        if (provider.data_validate() == '') {
                           provider.indbound_data(context);
-                        }else{
+                        } else {
                           alertDialog(provider.data_validate());
                         }
                       },
@@ -359,66 +359,85 @@ class _DashState extends State<DashPage> {
                 ),
               ),
             ),
-            drawer: Drawer(child: ListView(
+            drawer: Drawer(
+              child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
                   DrawerHeader(
                       decoration: BoxDecoration(
                         color: Colors.amber,
-
                       ),
                       child: Center(
-                        child: Image.asset(ImageRes.stock,height: 100.h,width: 100.w,fit: BoxFit.contain,),
-                      )
-                  ),
+                        child: Image.asset(
+                          ImageRes.stock,
+                          height: 100.h,
+                          width: 100.w,
+                          fit: BoxFit.contain,
+                        ),
+                      )),
                   ListTile(
                     leading: Icon(Icons.person),
-                    title: CText(text:'My Profile',size: 14.5.sp,),
+                    title: CText(
+                      text: 'My Profile',
+                      size: 14.5.sp,
+                    ),
                     onTap: () {
                       Navigator.pop(context);
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.devices,),
-                    title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [CText(text:'Honey Well',size: 14.5.sp,), CupertinoSwitch(
-
-                        activeColor: ColorRes.green_08BA64,
-                        trackColor: ColorRes.white_66EFEFEF,
-                        value: provider.isSwitchedHoneyWell,
-                        onChanged: (v) {
-                          provider.isSwitchedHoneyWell = v;
-                        }),],),
+                    leading: Icon(
+                      Icons.devices,
+                    ),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CText(
+                          text: 'Honey Well',
+                          size: 14.5.sp,
+                        ),
+                        CupertinoSwitch(
+                            activeColor: ColorRes.green_08BA64,
+                            trackColor: ColorRes.white_66EFEFEF,
+                            value: provider.isSwitchedHoneyWell,
+                            onChanged: (v) {
+                              provider.isSwitchedHoneyWell = v;
+                            }),
+                      ],
+                    ),
                     onTap: () {
                       Navigator.pop(context);
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.import_export_outlined),
-                    title: CText(text:'Export',size: 14.5.sp,),
-                    onTap: () async{
-
-
-
-                        Map<Permission, PermissionStatus> statuses = await [
-                          Permission.storage,
-                        ].request();
-                        if(statuses[Permission.storage].toString() == "PermissionStatus.granted"){
-                            if(Hive.box("inbound_database").length > 0) {
-                              excelUtils.createExcel('Hello');
-                              Navigator.pop(context);
-                            }else{
-                              alertDialog("No Data Available");
-                            }
+                    title: CText(
+                      text: 'Export',
+                      size: 14.5.sp,
+                    ),
+                    onTap: () async {
+                      Map<Permission, PermissionStatus> statuses = await [
+                        Permission.storage,
+                      ].request();
+                      if (statuses[Permission.storage].toString() ==
+                          "PermissionStatus.granted") {
+                        if (Hive.box("inbound_database").length > 0) {
+                          provider.fileNameController.text =
+                              DateTime.now().day.toString() +
+                                  "_" +
+                                  DateTime.now().month.toString() +
+                                  "_" +
+                                  DateTime.now().year.toString() +
+                                  "_" +
+                                  DateTime.now().millisecond.toString();
+                          alertFileDialog(provider);
+                        } else {
+                          alertDialog("No Data Available");
                         }
-                        else{
-                          alertDialog("We need to request your permission to read ");
-                        }
-
-
-
-
-
+                      } else {
+                        alertDialog(
+                            "We need to request your permission to read ");
+                      }
                     },
                   ),
                   ListTile(
@@ -443,26 +462,25 @@ class _DashState extends State<DashPage> {
                     },
                   ),
                 ],
-              ),),
+              ),
+            ),
           )),
     );
   }
 
-  alertDialog(String value){
-
+  alertDialog(String value) {
     showDialog(
         context: context,
-
         builder: (BuildContext context) {
-          return  AlertDialog(
-            title:  CText(
+          return AlertDialog(
+            title: CText(
               text: 'Error Result',
               fontWeight: FontWeight.w700,
               color: Colors.black,
               size: 20.sp,
               fontFamily: FontRes.bold,
             ),
-            content:  CText(
+            content: CText(
               text: value,
               fontWeight: FontWeight.w500,
               color: Colors.black,
@@ -470,11 +488,62 @@ class _DashState extends State<DashPage> {
               maxLines: 2,
               fontFamily: FontRes.regular,
             ),
-
-          );});
+          );
+        });
   }
 
+  alertFileDialog(DashViewModel provider) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: CText(
+              text: 'File Name',
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+              size: 20.sp,
+              fontFamily: FontRes.bold,
+            ),
+            content: CTextField(
+                hint_text: 'File Name',
+                controller: provider.fileNameController,
+                textInputType: TextInputType.text),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: CText(
+                  text: 'Cancel',
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  size: 16.sp,
+                  fontFamily: FontRes.medium,
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: ColorRes.green_08BA64),
+                onPressed: () {
+                  if (!File('storage/emulated/0/Download/' +
+                          provider.fileNameController.text +
+                          '.xlsx')
+                      .existsSync()) {
+                    excelUtils.createExcel(provider.fileNameController.text);
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: CText(
+                  text: 'Accept',
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  size: 16.sp,
+                  fontFamily: FontRes.medium,
+                ),
+              ),
+            ],
+          );
+        });
+  }
 }
-
-
-
