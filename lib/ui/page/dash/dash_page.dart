@@ -301,29 +301,47 @@ class _DashState extends State<DashPage> {
                       height: 13.h,
                     ),
                     SizedBox(
-                      height: 100.h,
+                      height: 110.h,
                       child: ListView.builder(
                         itemCount: provider.listImage.length,
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         itemBuilder: (_, index) {
                           return Container(
+                            alignment: Alignment.center,
                             margin: EdgeInsets.only(left: 8.w),
-                            child: InkWell(
-                              onLongPress: () {
-                                provider.listImageRemove = index;
-                              },
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(12.5)),
-                                child: Image.file(
-                                  File(provider.listImage[index]!.path),
-                                  height: 100.r,
-                                  width: 100.r,
-                                  fit: BoxFit.cover,
-                                ),
+
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.symmetric(vertical: 5.h,horizontal: 5.w),
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(12.5)),
+                                      child: Image.file(
+                                        File(provider.listImage[index]!.path),
+                                        height: 100.r,
+                                        width: 100.r,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                      top: -2.h,
+                                      right: -2.w,
+                                      child: InkWell(
+                                        onTap:(){
+                                          provider.listImageRemove = index;
+                                        },
+                                        child: Icon(
+                                          Icons.remove_circle,
+                                          color: Colors.redAccent,
+                                          size: 25.r,
+                                        ),
+                                      ))
+                                ],
                               ),
-                            ),
+
                           );
                         },
                       ),
