@@ -3,10 +3,13 @@ import 'dart:io';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:inbound_flutter/core/model/inbound_data_model.dart';
+import 'package:inbound_flutter/core/session/session.dart';
+import 'package:inbound_flutter/di/dependency_injection.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 
 class ExcelUtils{
+  final Session session = di<Session>();
   Future<void> createExcel(String file_name) async {
     //Create a Excel document.
     final Workbook workbook = Workbook();
@@ -28,14 +31,14 @@ class ExcelUtils{
     worksheet.getRangeByIndex(1,14).columnWidth = 17;
 
   // Excel header
-    worksheet.getRangeByIndex(1,1).setText('Date');
-    worksheet.getRangeByIndex(1,2).setText('sl');
-    worksheet.getRangeByIndex(1,3).setText('Container Sl');
-    worksheet.getRangeByIndex(1,4).setText('Seal No.');
-    worksheet.getRangeByIndex(1,5).setText('Warehouse');
-    worksheet.getRangeByIndex(1,6).setText('Material No');
-    worksheet.getRangeByIndex(1,7).setText('Reel No/barcode');
-    worksheet.getRangeByIndex(1,8).setText('QYT(M)');
+    worksheet.getRangeByIndex(1,1).setText(session.getString(session.Date));;
+    worksheet.getRangeByIndex(1,2)..setText(session.getString(session.Sl));;
+    worksheet.getRangeByIndex(1,3).setText(session.getString(session.ContainerSl));
+    worksheet.getRangeByIndex(1,4).setText(session.getString(session.SealNo));
+    worksheet.getRangeByIndex(1,5).setText(session.getString(session.WareHouse));
+    worksheet.getRangeByIndex(1,6).setText(session.getString(session.MaterialNo));
+    worksheet.getRangeByIndex(1,7).setText(session.getString(session.ReelNo));
+    worksheet.getRangeByIndex(1,8).setText(session.getString(session.Qyt));
     worksheet.getRangeByIndex(1,9).setText('Pic 1');
     worksheet.getRangeByIndex(1,10).setText('Pic 2');
     worksheet.getRangeByIndex(1,11).setText('Pic 3');

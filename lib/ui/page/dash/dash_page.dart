@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:inbound_flutter/core/route/route_paths.dart';
+import 'package:inbound_flutter/core/session/session.dart';
 import 'package:inbound_flutter/di/dependency_injection.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
 import 'package:inbound_flutter/ui/widget/c_textfield.dart';
@@ -33,6 +34,7 @@ class _DashState extends State<DashPage> {
   var imageUtils = di<ImageUtils>();
   var dateTimeUtils = di<DateTimeUtils>();
   var excelUtils = di<ExcelUtils>();
+  final Session session = di<Session>();
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +102,7 @@ class _DashState extends State<DashPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             CText(
-                              text: 'Date',
+                              text: session.getString(session.Date),
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(
@@ -153,12 +155,12 @@ class _DashState extends State<DashPage> {
                     Row(
                       children: [
                         CText(
-                          text: 'Container Sl : ',
+                          text: session.getString(session.ContainerSl)+' : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
                             child: CTextField(
-                                hint_text: 'Container Sl',
+                                hint_text: session.getString(session.ContainerSl),
                                 controller: provider.containerSlController,
                                 textInputType: TextInputType.text))
                       ],
@@ -169,12 +171,12 @@ class _DashState extends State<DashPage> {
                     Row(
                       children: [
                         CText(
-                          text: 'Seal No. : ',
+                          text: session.getString(session.SealNo)+' : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
                             child: CTextField(
-                                hint_text: 'Seal No.',
+                                hint_text: session.getString(session.SealNo),
                                 controller: provider.sealNoController,
                                 textInputType: TextInputType.text))
                       ],
@@ -185,12 +187,12 @@ class _DashState extends State<DashPage> {
                     Row(
                       children: [
                         CText(
-                          text: 'Warehouse : ',
+                          text: session.getString(session.WareHouse)+' : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
                             child: CTextField(
-                                hint_text: 'Warehouse',
+                                hint_text: session.getString(session.WareHouse),
                                 controller: provider.wareHouseController,
                                 textInputType: TextInputType.text))
                       ],
@@ -201,12 +203,12 @@ class _DashState extends State<DashPage> {
                     Row(
                       children: [
                         CText(
-                          text: 'Metarial No. : ',
+                          text: session.getString(session.MaterialNo)+' : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
                             child: CTextField(
-                                hint_text: 'Metarial No.',
+                                hint_text: session.getString(session.MaterialNo),
                                 controller: provider.materialNoController,
                                 textInputType: TextInputType.number))
                       ],
@@ -217,12 +219,12 @@ class _DashState extends State<DashPage> {
                     Row(
                       children: [
                         CText(
-                          text: 'Qyt. : ',
+                          text: session.getString(session.Qyt)+' : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
                             child: CTextField(
-                                hint_text: 'Quantity.',
+                                hint_text: session.getString(session.Qyt),
                                 controller: provider.qytController,
                                 textInputType: TextInputType.number))
                       ],
@@ -459,10 +461,14 @@ class _DashState extends State<DashPage> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.video_label),
-                    title: const Text(' Saved Videos '),
+                    leading: Icon(Icons.edit),
+                    title: CText(
+                      text: 'Edit Field',
+                      size: 14.5.sp,
+                    ),
                     onTap: () {
                       Navigator.pop(context);
+                      Navigator.of(context).pushNamed(RoutePaths.FIELD);
                     },
                   ),
                   ListTile(

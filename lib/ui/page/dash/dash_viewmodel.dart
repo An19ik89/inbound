@@ -7,9 +7,24 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inbound_flutter/core/model/inbound_data_model.dart';
+import 'package:inbound_flutter/core/session/session.dart';
+import 'package:inbound_flutter/di/dependency_injection.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class DashViewModel with ChangeNotifier {
+  final Session session = di<Session>();
+  DashViewModel(){
+    containerSlFieldController.text = session.getString(session.ContainerSl);
+    sealNoFieldController.text = session.getString(session.SealNo);
+    wareHouseFieldController.text = session.getString(session.WareHouse);
+    materialNoFieldController.text = session.getString(session.MaterialNo);
+    qytFieldController.text = session.getString(session.Qyt);
+    dateFieldController.text = session.getString(session.Date);
+    slFieldController.text = session.getString(session.Sl);
+
+
+  }
+
   // Controller
   TextEditingController containerSlController = TextEditingController();
   TextEditingController sealNoController = TextEditingController();
@@ -138,6 +153,29 @@ class DashViewModel with ChangeNotifier {
     _barcode = null;
     _listImage.clear();
     _base64ImageList.clear();
+    notifyListeners();
+  }
+
+
+
+  // Controller field
+  TextEditingController containerSlFieldController = TextEditingController();
+  TextEditingController sealNoFieldController = TextEditingController();
+  TextEditingController wareHouseFieldController = TextEditingController();
+  TextEditingController materialNoFieldController = TextEditingController();
+  TextEditingController qytFieldController = TextEditingController();
+  TextEditingController dateFieldController = TextEditingController();
+  TextEditingController slFieldController = TextEditingController();
+
+
+  void title_data(){
+    session.setString(session.ContainerSl, containerSlFieldController.text);
+    session.setString(session.SealNo, sealNoFieldController.text);
+    session.setString(session.WareHouse, wareHouseFieldController.text);
+    session.setString(session.MaterialNo, materialNoFieldController.text);
+    session.setString(session.Qyt, qytFieldController.text);
+    session.setString(session.Date, dateFieldController.text);
+    session.setString(session.Sl, slFieldController.text);
     notifyListeners();
   }
 
