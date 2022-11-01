@@ -553,6 +553,43 @@ class _DashState extends State<DashPage> {
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
                     // loader on
+                    showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (context) {
+                        return AlertDialog(
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          contentPadding: const EdgeInsets.all(0),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                          ),
+                          content: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                            constraints: BoxConstraints(
+                              maxHeight: MediaQuery.of(context).size.height / 1.7,
+                            ),
+                            width: 300.w,
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0), color: Colors.transparent),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    CircularProgressIndicator(),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 50.h,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
                     excelUtils
                         .createExcel(provider.fileNameController.text)
                         .then((value) {
@@ -560,6 +597,7 @@ class _DashState extends State<DashPage> {
 
                       if (value.path == 'storage/emulated/0/Download/${provider.fileNameController.text}.xlsx') {
                         print('anik');
+                        Navigator.of(context).pop();
 // Hive.box("inbound_database").clear();
                       }
                       //loader off
