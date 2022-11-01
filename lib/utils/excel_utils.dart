@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:inbound_flutter/core/model/inbound_data_model.dart';
 import 'package:inbound_flutter/core/session/session.dart';
@@ -7,7 +8,7 @@ import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 
 class ExcelUtils{
   final Session session = di<Session>();
-  Future<void> createExcel(String file_name) async {
+  Future<void> createExcel(String file_name,context) async {
     //Create a Excel document.
     final Workbook workbook = Workbook();
     final Worksheet worksheet = workbook.worksheets[0];
@@ -66,8 +67,9 @@ class ExcelUtils{
     //Dispose the document.
     workbook.dispose();
   File('storage/emulated/0/Download/'+file_name+'.xlsx').writeAsBytes(bytes).then((value) {
-    print(value);
+    //print(value);
     // Hive.box("inbound_database").clear();
+    Navigator.pop(context);
   });
   
   }

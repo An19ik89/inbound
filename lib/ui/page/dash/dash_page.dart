@@ -100,6 +100,12 @@ class _DashState extends State<DashPage> {
                       },
                       child: Container(
                         height: 50.h,
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.amber, width: 0.5.r),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12.5.r)),
+                            color: Colors.white),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -143,12 +149,6 @@ class _DashState extends State<DashPage> {
                             ),
                           ],
                         ),
-                        decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.amber, width: 0.5.r),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.5.r)),
-                            color: Colors.white),
                       ),
                     ),
                     SizedBox(
@@ -157,7 +157,7 @@ class _DashState extends State<DashPage> {
                     Row(
                       children: [
                         CText(
-                          text: session.getString(session.ContainerSl)+' : ',
+                          text: '${session.getString(session.ContainerSl)} : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
@@ -173,7 +173,7 @@ class _DashState extends State<DashPage> {
                     Row(
                       children: [
                         CText(
-                          text: session.getString(session.SealNo)+' : ',
+                          text: '${session.getString(session.SealNo)} : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
@@ -189,7 +189,7 @@ class _DashState extends State<DashPage> {
                     Row(
                       children: [
                         CText(
-                          text: session.getString(session.WareHouse)+' : ',
+                          text: '${session.getString(session.WareHouse)} : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
@@ -205,7 +205,7 @@ class _DashState extends State<DashPage> {
                     Row(
                       children: [
                         CText(
-                          text: session.getString(session.MaterialNo)+' : ',
+                          text: '${session.getString(session.MaterialNo)} : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
@@ -221,7 +221,7 @@ class _DashState extends State<DashPage> {
                     Row(
                       children: [
                         CText(
-                          text: session.getString(session.Qyt)+' : ',
+                          text: '${session.getString(session.Qyt)} : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
@@ -249,7 +249,7 @@ class _DashState extends State<DashPage> {
                         decoration: BoxDecoration(
                             color: Colors.amber,
                             borderRadius: BorderRadius.circular(12.5.r)),
-                        child: CText(
+                        child: const CText(
                           text: 'SCAN BARCODE',
                           color: Colors.white,
                           textAlign: TextAlign.center,
@@ -264,6 +264,11 @@ class _DashState extends State<DashPage> {
                       height: 45.h,
                       width: double.infinity,
                       alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 0.5.r),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(12.5.r)),
+                          color: Colors.white),
                       child: CText(
                         text: provider.barcode ?? 'Barcode empty',
                         color: provider.barcode != null
@@ -271,11 +276,6 @@ class _DashState extends State<DashPage> {
                             : Colors.grey,
                         textAlign: TextAlign.center,
                       ),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 0.5.r),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(12.5.r)),
-                          color: Colors.white),
                     ),
                     SizedBox(
                       height: 13.h,
@@ -294,7 +294,7 @@ class _DashState extends State<DashPage> {
                         decoration: BoxDecoration(
                             color: Colors.amber,
                             borderRadius: BorderRadius.circular(12.5.r)),
-                        child: CText(
+                        child: const CText(
                           text: 'CAMERA',
                           color: Colors.white,
                           textAlign: TextAlign.center,
@@ -370,7 +370,7 @@ class _DashState extends State<DashPage> {
                         decoration: BoxDecoration(
                             color: ColorRes.green_08BA64,
                             borderRadius: BorderRadius.circular(12.5.r)),
-                        child: CText(
+                        child: const CText(
                           text: 'SAVE',
                           color: Colors.white,
                           textAlign: TextAlign.center,
@@ -387,7 +387,7 @@ class _DashState extends State<DashPage> {
                 padding: EdgeInsets.zero,
                 children: [
                   DrawerHeader(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.amber,
                       ),
                       child: Center(
@@ -399,7 +399,7 @@ class _DashState extends State<DashPage> {
                         ),
                       )),
                   ListTile(
-                    leading: Icon(Icons.person),
+                    leading: const Icon(Icons.person),
                     title: CText(
                       text: 'My Profile',
                       size: 14.5.sp,
@@ -409,7 +409,7 @@ class _DashState extends State<DashPage> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(
+                    leading: const Icon(
                       Icons.devices,
                     ),
                     title: Row(
@@ -433,12 +433,51 @@ class _DashState extends State<DashPage> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.import_export_outlined),
+                    leading: const Icon(Icons.import_export_outlined),
                     title: CText(
                       text: 'Export',
                       size: 14.5.sp,
                     ),
                     onTap: () async {
+
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            contentPadding: const EdgeInsets.all(0),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                            ),
+                            content: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10.w),
+                              constraints: BoxConstraints(
+                                maxHeight: MediaQuery.of(context).size.height / 1.7,
+                              ),
+                              width: 300.w,
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0), color: Colors.transparent),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      CircularProgressIndicator(),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 50.h,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+
                       Map<Permission, PermissionStatus> statuses = await [
                         Permission.storage,
                       ].request();
@@ -446,13 +485,7 @@ class _DashState extends State<DashPage> {
                           "PermissionStatus.granted") {
                         if (Hive.box("inbound_database").length > 0) {
                           provider.fileNameController.text =
-                              DateTime.now().day.toString() +
-                                  "_" +
-                                  DateTime.now().month.toString() +
-                                  "_" +
-                                  DateTime.now().year.toString() +
-                                  "_" +
-                                  DateTime.now().millisecond.toString();
+                              "${DateTime.now().day}_${DateTime.now().month}_${DateTime.now().year}_${DateTime.now().millisecond}";
                           alertFileDialog(provider);
                         } else {
                           alertDialog("No Data Available");
@@ -464,7 +497,7 @@ class _DashState extends State<DashPage> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.edit),
+                    leading: const Icon(Icons.edit),
                     title: CText(
                       text: 'Edit Field',
                       size: 14.5.sp,
@@ -475,14 +508,14 @@ class _DashState extends State<DashPage> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.edit),
+                    leading: const Icon(Icons.edit),
                     title: const Text(' Edit Profile '),
                     onTap: () {
                       Navigator.pop(context);
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.logout),
+                    leading: const Icon(Icons.logout),
                     title: const Text('LogOut'),
                     onTap: () {
                       Navigator.pop(context);
@@ -552,11 +585,9 @@ class _DashState extends State<DashPage> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: ColorRes.green_08BA64),
                 onPressed: () {
-                  if (!File('storage/emulated/0/Download/' +
-                          provider.fileNameController.text +
-                          '.xlsx')
+                  if (!File('storage/emulated/0/Download/${provider.fileNameController.text}.xlsx')
                       .existsSync()) {
-                    excelUtils.createExcel(provider.fileNameController.text);
+                    excelUtils.createExcel(provider.fileNameController.text,this.context);
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
                   }
@@ -581,7 +612,9 @@ class _DashState extends State<DashPage> {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
       provider.barcode = barcodeScanRes;
-      print(barcodeScanRes);
+      if (kDebugMode) {
+        print(barcodeScanRes);
+      }
 
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
