@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:inbound_flutter/core/model/inbound_data_model.dart';
 import 'package:inbound_flutter/core/session/session.dart';
 import 'package:inbound_flutter/di/dependency_injection.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+
 
 class DashViewModel with ChangeNotifier {
   final Session session = di<Session>();

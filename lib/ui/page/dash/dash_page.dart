@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:inbound_flutter/core/route/route_paths.dart';
@@ -236,7 +238,8 @@ class _DashState extends State<DashPage> {
                       onTap: () {
                         FocusManager.instance.primaryFocus?.unfocus();
                         if (!provider.isSwitchedHoneyWell) {
-                          Navigator.of(context).pushNamed(RoutePaths.QRSCAN);
+                          scanBarcodeNormal(provider);
+                          // Navigator.of(context).pushNamed(RoutePaths.QRSCAN);
                         }
                       },
                       child: Container(
@@ -569,5 +572,24 @@ class _DashState extends State<DashPage> {
             ],
           );
         });
+  }
+
+  Future<void> scanBarcodeNormal(DashViewModel provider) async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      provider.barcode = barcodeScanRes;
+      print(barcodeScanRes);
+
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
   }
 }
