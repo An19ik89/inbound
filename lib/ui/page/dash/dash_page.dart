@@ -440,43 +440,7 @@ class _DashState extends State<DashPage> {
                     ),
                     onTap: () async {
 
-                      showDialog(
-                        context: context,
-                        barrierDismissible: true,
-                        builder: (context) {
-                          return AlertDialog(
-                            backgroundColor: Colors.transparent,
-                            elevation: 0,
-                            contentPadding: const EdgeInsets.all(0),
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
-                            ),
-                            content: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10.w),
-                              constraints: BoxConstraints(
-                                maxHeight: MediaQuery.of(context).size.height / 1.7,
-                              ),
-                              width: 300.w,
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0), color: Colors.transparent),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      CircularProgressIndicator(),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 50.h,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
+
 
                       Map<Permission, PermissionStatus> statuses = await [
                         Permission.storage,
@@ -587,7 +551,7 @@ class _DashState extends State<DashPage> {
                 onPressed: () {
                   if (!File('storage/emulated/0/Download/${provider.fileNameController.text}.xlsx')
                       .existsSync()) {
-                    excelUtils.createExcel(provider.fileNameController.text,this.context);
+                    excelUtils.createExcel(provider.fileNameController.text);
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
                   }
