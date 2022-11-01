@@ -162,7 +162,8 @@ class _DashState extends State<DashPage> {
                         ),
                         Flexible(
                             child: CTextField(
-                                hint_text: session.getString(session.ContainerSl),
+                                hint_text:
+                                    session.getString(session.ContainerSl),
                                 controller: provider.containerSlController,
                                 textInputType: TextInputType.text))
                       ],
@@ -210,7 +211,8 @@ class _DashState extends State<DashPage> {
                         ),
                         Flexible(
                             child: CTextField(
-                                hint_text: session.getString(session.MaterialNo),
+                                hint_text:
+                                    session.getString(session.MaterialNo),
                                 controller: provider.materialNoController,
                                 textInputType: TextInputType.number))
                       ],
@@ -315,38 +317,37 @@ class _DashState extends State<DashPage> {
                           return Container(
                             alignment: Alignment.center,
                             margin: EdgeInsets.only(left: 8.w),
-
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.symmetric(vertical: 5.h,horizontal: 5.w),
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(12.5)),
-                                      child: Image.file(
-                                        File(provider.listImage[index]!.path),
-                                        height: 100.r,
-                                        width: 100.r,
-                                        fit: BoxFit.cover,
-                                      ),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5.h, horizontal: 5.w),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12.5)),
+                                    child: Image.file(
+                                      File(provider.listImage[index]!.path),
+                                      height: 100.r,
+                                      width: 100.r,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                  Positioned(
-                                      top: -2.h,
-                                      right: -2.w,
-                                      child: InkWell(
-                                        onTap:(){
-                                          provider.listImageRemove = index;
-                                        },
-                                        child: Icon(
-                                          Icons.remove_circle,
-                                          color: Colors.redAccent,
-                                          size: 25.r,
-                                        ),
-                                      ))
-                                ],
-                              ),
-
+                                ),
+                                Positioned(
+                                    top: -2.h,
+                                    right: -2.w,
+                                    child: InkWell(
+                                      onTap: () {
+                                        provider.listImageRemove = index;
+                                      },
+                                      child: Icon(
+                                        Icons.remove_circle,
+                                        color: Colors.redAccent,
+                                        size: 25.r,
+                                      ),
+                                    ))
+                              ],
+                            ),
                           );
                         },
                       ),
@@ -439,9 +440,6 @@ class _DashState extends State<DashPage> {
                       size: 14.5.sp,
                     ),
                     onTap: () async {
-
-
-
                       Map<Permission, PermissionStatus> statuses = await [
                         Permission.storage,
                       ].request();
@@ -549,11 +547,25 @@ class _DashState extends State<DashPage> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: ColorRes.green_08BA64),
                 onPressed: () {
-                  if (!File('storage/emulated/0/Download/${provider.fileNameController.text}.xlsx')
+                  if (!File(
+                          'storage/emulated/0/Download/${provider.fileNameController.text}.xlsx')
                       .existsSync()) {
-                    excelUtils.createExcel(provider.fileNameController.text);
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
+                    // loader on
+                    excelUtils
+                        .createExcel(provider.fileNameController.text)
+                        .then((value) {
+                      print(value);
+
+                      if (value.path == 'storage/emulated/0/Download/${provider.fileNameController.text}.xlsx') {
+                        print('anik');
+// Hive.box("inbound_database").clear();
+                      }
+                      //loader off
+                    }).catchError((onError, stackTrace){
+                    //loader off
+                    });
                   }
                 },
                 child: CText(
@@ -579,7 +591,6 @@ class _DashState extends State<DashPage> {
       if (kDebugMode) {
         print(barcodeScanRes);
       }
-
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }

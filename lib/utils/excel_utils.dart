@@ -8,7 +8,7 @@ import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 
 class ExcelUtils{
   final Session session = di<Session>();
-  Future<void> createExcel(String file_name) async {
+  Future<File> createExcel(String file_name) async {
     //Create a Excel document.
     final Workbook workbook = Workbook();
     final Worksheet worksheet = workbook.worksheets[0];
@@ -66,10 +66,11 @@ class ExcelUtils{
     final List<int> bytes = workbook.saveAsStream();
     //Dispose the document.
     workbook.dispose();
-  File('storage/emulated/0/Download/'+file_name+'.xlsx').writeAsBytes(bytes).then((value) {
-    //print(value);
-    // Hive.box("inbound_database").clear();
-  });
+   return await File('storage/emulated/0/Download/'+file_name+'.xlsx').writeAsBytes(bytes);
+  //  .then((value) {
+  //   //print(value);
+  //
+  // });
   
   }
 
