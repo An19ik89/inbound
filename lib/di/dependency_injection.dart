@@ -8,8 +8,14 @@ import 'package:inbound_flutter/core/model/inbound_data_model.dart';
 import 'package:inbound_flutter/core/session/session.dart';
 import 'package:inbound_flutter/core/session/session_impl.dart';
 import 'package:inbound_flutter/ui/page/field/field_page.dart';
+import 'package:inbound_flutter/ui/page/navigation/navigation_page.dart';
+import 'package:inbound_flutter/ui/page/navigation/tab/details_tab.dart';
+import 'package:inbound_flutter/ui/page/navigation/tab/home_tab.dart';
+import 'package:inbound_flutter/ui/page/navigation/tab/settings_tab.dart';
 import 'package:inbound_flutter/utils/excel_utils.dart';
 import 'package:inbound_flutter/utils/image_utils.dart';
+import 'package:inbound_flutter/utils/alert_dialog_utils.dart';
+import 'package:inbound_flutter/utils/res/qrscan_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,16 +41,24 @@ Future<void> setup() async {
   di.registerSingleton<SharedPreferences>(await SharedPreferences.getInstance());
   di.registerLazySingleton<Session>(() => SessionImpl(  preferences: di<SharedPreferences>()));
 
-
-
-  //pages
-  di.registerSingleton(DashPage());
-  di.registerSingleton(FieldPage());
-
   //utils
   di.registerSingleton(ImageUtils());
   di.registerSingleton(DateTimeUtils());
   di.registerSingleton(ExcelUtils());
+  di.registerSingleton(AlertDialogUtils());
+  di.registerSingleton(QrScanUtils());
+
+  //pages
+  di.registerSingleton(DashPage());
+  di.registerSingleton(FieldPage());
+  di.registerSingleton(NavigationPage());
+
+  //tab
+  di.registerSingleton(HomeTab());
+  di.registerSingleton(DetailsTab());
+  di.registerSingleton(SettingsTab());
+
+
 
 
 }

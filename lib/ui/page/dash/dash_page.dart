@@ -597,11 +597,14 @@ class _DashState extends State<DashPage> {
 
                       if (value.path == 'storage/emulated/0/Download/${provider.fileNameController.text}.xlsx') {
                         print('anik');
-                        Navigator.of(context).pop();
+
 // Hive.box("inbound_database").clear();
                       }
+                      Navigator.of(context).pop();
                       //loader off
                     }).catchError((onError, stackTrace){
+                      print(onError);
+                      Navigator.of(context).pop();
                     //loader off
                     });
                   }
