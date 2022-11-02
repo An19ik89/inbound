@@ -68,8 +68,8 @@ class NavigationViewModel with ChangeNotifier {
 
 
   // Image Picking
-  List<XFile?> _listImage = [];
-  List<String> _base64ImageList = [];
+  final List<XFile?> _listImage = [];
+  final List<String> _base64ImageList = [];
   List<XFile?> get listImage => _listImage;
 
   set listImageAdd(XFile? value) {
@@ -99,12 +99,13 @@ class NavigationViewModel with ChangeNotifier {
     if (!Hive.box("inbound_database").containsKey(reelNoController.text)) {
       Hive.box("inbound_database").put(reelNoController.text,dataModel).then((_)  {
         clearDatabaseDate();
+
         getDatabaseData();
       });
     }
     else{
 
-      final snackBar = SnackBar(
+      const snackBar = SnackBar(
         content: Text(
             'Barcode already been used !'),
       );
@@ -122,7 +123,9 @@ class NavigationViewModel with ChangeNotifier {
     else if(materialNoController.text.isEmpty) return 'Material is empty';
     else if(qytController.text.isEmpty) return 'Quantity is empty';
     else if(reelNoController.text.isEmpty) return 'Barcode is empty';
-    else return '';
+    else {
+      return '';
+    }
 
   }
 
