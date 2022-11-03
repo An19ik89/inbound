@@ -4,7 +4,9 @@ import 'dart:typed_data';
 import 'dart:io' as Io;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:inbound_flutter/ui/widget/c_text.dart';
 import 'package:inbound_flutter/utils/res/color_res.dart';
+import 'package:inbound_flutter/utils/res/font_res.dart';
 
 import '../../utils/res/image_res.dart';
 
@@ -18,10 +20,11 @@ class DetailsItem extends StatelessWidget {
   final String? metarial_no;
   final String? qyt;
   final String? campaign_date;
+  final String? image_quantity;
 
 
   const DetailsItem(
-      {Key? key, this.image_link, this.reel_no, this.campaign_date, this.container, this.seel_no, this.warehouse, this.metarial_no, this.qyt})
+      {Key? key, this.image_link, this.reel_no, this.campaign_date, this.container, this.seel_no, this.warehouse, this.metarial_no, this.qyt, this.image_quantity})
       : super(key: key);
 
   @override
@@ -46,28 +49,31 @@ class DetailsItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          //image_link!.isNotEmpty ?
-          SizedBox(
-            height: 150.h,
-            width: 131.w,
-            child: ClipRRect(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(15.r), bottomLeft: Radius.circular(15.r)),
-              //child: Image.memory(Base64Decoder().convert(image_link ??''), height: 150.h, width: 131.w, fit: BoxFit.cover,),
-              child: Image.memory(uint8list, height: 150.h, width: 131.w, fit: BoxFit.cover,),
-            ),
+          image_link!.isNotEmpty ?
+          Stack(
+            children: [
+              SizedBox(
+                height: 150.h,
+                width: 131.w,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(15.r), bottomLeft: Radius.circular(15.r)),
+                  child: Image.memory(Base64Decoder().convert(image_link ??''), height: 150.h, width: 131.w, fit: BoxFit.cover,),
+                  // child: Image.memory(uint8list, height: 150.h, width: 131.w, fit: BoxFit.cover,),
+                ),
 
-          )
-          //     :
-          // Container(
-          //   height: 150.h,
-          //     width: 131.w,
-          //   decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.only(topLeft: Radius.circular(15.r), bottomLeft: Radius.circular(15.r)), color: Colors.grey),
-          //   child: Center(
-          //     child: Image.asset(ImageRes.stock, height: 70.r, width: 70.r, fit: BoxFit.cover,),
-          //   ),
-          // ),
-,
+              ),
+              Positioned.fill(child:  Center(child:  CText(text: image_quantity ?? '',size: 25.sp,color: Colors.amber,fontWeight: FontWeight.w700,fontFamily: FontRes.bold,),),
+              )
+            ],
+          ):Container(
+            height: 150.h,
+              width: 131.w,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(15.r), bottomLeft: Radius.circular(15.r)), color: Colors.grey),
+            child: Center(
+              child: Image.asset(ImageRes.stock, height: 70.r, width: 70.r, fit: BoxFit.cover,),
+            ),
+          ),
           Expanded(
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 9.5.h, horizontal: 11.w),
@@ -75,80 +81,21 @@ class DetailsItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      reel_no ?? '',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+
+                    Flexible(child: CText(text: reel_no ?? '',size: 16.sp,color: Colors.black,fontWeight: FontWeight.w600,fontFamily: FontRes.bold,maxLines: 1),),
                     SizedBox(height: 8.h,),
-                    Text(
-                      container ?? '',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
+                    Flexible(child: CText(text:  container ?? '',size: 12.sp,color: Colors.black54,fontWeight: FontWeight.w400,maxLines: 1),),
                     SizedBox(height: 2.5.h,),
-                    Text(
-                      seel_no ?? '',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
+                    Flexible(child: CText(text:  seel_no ?? '',size: 12.sp,color: Colors.black54,fontWeight: FontWeight.w400,maxLines: 1),),
                     SizedBox(height: 2.5.h,),
-                    Text(
-                      warehouse ?? '',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
+                    Flexible(child: CText(text:  warehouse ?? '',size: 12.sp,color: Colors.black54,fontWeight: FontWeight.w400,maxLines: 1),),
                     SizedBox(height: 2.5.h,),
-                    Text(
-                      metarial_no ?? '',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
+                    Flexible(child: CText(text:  metarial_no ?? '',size: 12.sp,color: Colors.black54,fontWeight: FontWeight.w400,maxLines: 1),),
                     SizedBox(height: 2.5.h,),
-                    Text(
-                      qyt ?? '',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
+                    Flexible(child: CText(text:  qyt ?? '',size: 12.sp,color: Colors.black54,fontWeight: FontWeight.w400,maxLines: 1),),
 
                     SizedBox(height: 5.h,),
-                    Text(
-                      campaign_date ?? '',
-                      style: TextStyle(
-                        color: ColorRes.green_00BC69,
-                        fontSize: 13.5.sp,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.normal
-                      ),
-                    ),
+                    Flexible(child:  CText(text:  campaign_date ?? '',size: 13.5.sp,color: ColorRes.green_00BC69,fontWeight: FontWeight.w500,fontFamily: FontRes.medium,maxLines: 1,),),
 
                   ],
                 ),

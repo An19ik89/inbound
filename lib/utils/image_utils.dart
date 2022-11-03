@@ -7,7 +7,7 @@ class ImageUtils{
   Future<XFile?> pickCameraImage() async {
     final ImagePicker _picker = ImagePicker();
     return await _picker.pickImage(source: ImageSource.camera,
-      maxWidth: 166.08,maxHeight: 133.44,imageQuality: 90,);
+      maxWidth: 133.44,maxHeight: 133.44,imageQuality: 90,);
   }
 
   Future<String> imageCovertBase64(XFile? imageBytes) async{

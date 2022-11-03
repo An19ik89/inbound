@@ -4,7 +4,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:inbound_flutter/ui/page/navigation/navigation_viewmodel.dart';
+import 'package:inbound_flutter/ui/widget/c_text.dart';
 import 'package:inbound_flutter/ui/widget/details_item.dart';
+import 'package:inbound_flutter/utils/res/color_res.dart';
+import 'package:inbound_flutter/utils/res/font_res.dart';
 import 'package:provider/provider.dart';
 
 class DetailsTab extends StatelessWidget {
@@ -20,6 +23,15 @@ class DetailsTab extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
+             Row(
+               children: [
+                 CText(text:  'Total Scanned : ',size: 25.sp,color: Colors.black,fontWeight: FontWeight.w700,fontFamily: FontRes.bold,),
+                 SizedBox(width: 13.w,),
+                 CText(text:  provider.dataModelList.length .toString(),size: 25.sp,color: ColorRes.green_08BA64,fontWeight: FontWeight.w500,fontFamily: FontRes.bold,),
+               ],
+             ),
+            SizedBox(height:  20.h,),
             ListView.builder(
               scrollDirection: Axis.vertical,
               itemCount: provider.dataModelList.length ,
@@ -41,6 +53,7 @@ class DetailsTab extends StatelessWidget {
                       qyt: provider.dataModelList[index].quantity,
                       image_link: (provider.dataModelList[index].imageUrls?.length ?? 0) > 0 ? provider.dataModelList[index].imageUrls![0]:'',
                       campaign_date: provider.dataModelList[index].date,
+                      image_quantity: (provider.dataModelList[index].imageUrls?.length ?? 0) > 0 ? provider.dataModelList[index].imageUrls!.length > 1 ? (provider.dataModelList[index].imageUrls!.length).toString()+" +" :'':'',
 
                     ),
                   ),
