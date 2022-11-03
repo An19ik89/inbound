@@ -69,7 +69,7 @@ class NavigationViewModel with ChangeNotifier {
 
   // Image Picking
   final List<XFile?> _listImage = [];
-  final List<String> _base64ImageList = [];
+  List<String> _base64ImageList = <String>[];
   List<XFile?> get listImage => _listImage;
 
   set listImageAdd(XFile? value) {
@@ -135,7 +135,7 @@ class NavigationViewModel with ChangeNotifier {
     qytController.clear();
     reelNoController.clear();
     _listImage.clear();
-    //_base64ImageList.clear();
+    _base64ImageList = [];
     notifyListeners();
   }
 
