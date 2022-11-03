@@ -4,6 +4,14 @@ abstract class Session
 {
 
   final String LOGIN = 'login';
+  final String SCANNER = 'scanner';
+  final String defaut_user = 'tarzan';
+  final String default_password = 'tarzan1234';
+  final String default_db = 'db123456';
+  final String USER = 'USER';
+  final String PASSWORD = 'PASSWORD';
+
+
   final String ContainerSl = 'Container Sl';
   final String SealNo = 'Seal No.';
   final String WareHouse = 'Warehouse';
@@ -11,7 +19,7 @@ abstract class Session
   final String Qyt = 'Qyt';
   final String ReelNo = 'Reel No.';
   final String Date = 'Date';
-  final String Sl = 'sl';
+  final String Sl = 'Sl';
 
 
 
@@ -22,6 +30,11 @@ abstract class Session
 
   void setString(String name, String value);
   String getString(String name);
+
+  void setLoginUser( String value);
+  String getLoginUser();
+  void setLoginPassword( String value);
+  String getLoginPassword();
 
   void removeAll();
 }

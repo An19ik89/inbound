@@ -1,7 +1,4 @@
-
 import 'dart:convert';
-import 'dart:typed_data';
-import 'dart:io' as Io;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
@@ -29,16 +26,6 @@ class DetailsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //print("image link : $image_link");
-    //Uint8List Uint8list_Image = const Base64Decoder().convert(image_link ??'');
-    //print("image link : ${Uint8list_Image.toString()}");
-    // final decodedBytes = base64Decode(image_link!);
-    // Io.File file = Io.File("decodedBezkoder.png");
-    // print("image link decode : ${decodedBytes.toString()}");
-
-
-    Uint8List uint8list = base64.decode(image_link.toString());
-
 
     return Container(
       height: 150.h,

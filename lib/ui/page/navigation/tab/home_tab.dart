@@ -186,10 +186,10 @@ class HomeTab extends StatelessWidget {
                                 textInputType: TextInputType.number))
                       ],
                     ),
-                    SizedBox(
+                    provider.isSwitchedHoneyWell ? SizedBox.shrink(): SizedBox(
                       height: 13.h,
                     ),
-                    InkWell(
+                   provider.isSwitchedHoneyWell ? SizedBox.shrink(): InkWell(
                       onTap: () {
                         FocusManager.instance.primaryFocus?.unfocus();
                         if (!provider.isSwitchedHoneyWell) {

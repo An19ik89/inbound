@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:inbound_flutter/core/session/session.dart';
 import 'package:inbound_flutter/di/dependency_injection.dart';
-import 'package:inbound_flutter/ui/page/dash/dash_viewmodel.dart';
+import 'package:inbound_flutter/ui/page/navigation/navigation_viewmodel.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
 import 'package:inbound_flutter/ui/widget/c_textfield.dart';
 import 'package:inbound_flutter/utils/res/color_res.dart';
@@ -26,7 +26,7 @@ class _FieldState extends State<FieldPage> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<DashViewModel>(context);
+    var provider = Provider.of<NavigationViewModel>(context);
     return Container(
       color: Colors.amber,
       child: SafeArea(

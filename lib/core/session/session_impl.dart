@@ -34,4 +34,24 @@ class SessionImpl extends Session{
     preferences.setString(name, value);
   }
 
+  @override
+  String getLoginPassword() {
+    return preferences.getString( PASSWORD ) ?? default_password;
+  }
+
+  @override
+  String getLoginUser() {
+    return preferences.getString(USER  ) ?? defaut_user;
+  }
+
+  @override
+  void setLoginPassword(String value) {
+    preferences.setString(PASSWORD, value);
+  }
+
+  @override
+  void setLoginUser(String value) {
+    preferences.setString(USER, value);
+  }
+
 }

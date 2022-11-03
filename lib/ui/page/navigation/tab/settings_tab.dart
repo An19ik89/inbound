@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:inbound_flutter/core/route/route_paths.dart';
+import 'package:inbound_flutter/core/session/session.dart';
 import 'package:inbound_flutter/di/dependency_injection.dart';
 import 'package:inbound_flutter/ui/page/navigation/navigation_viewmodel.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
@@ -20,6 +21,7 @@ import 'package:provider/provider.dart';
 class SettingsTab extends StatelessWidget {
   var dialogUtils = di<AlertDialogUtils>();
   var excelUtils = di<ExcelUtils>();
+  final Session session = di<Session>();
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,7 @@ class SettingsTab extends StatelessWidget {
                         alertFileDialog(provider, context);
                       } else {
                         dialogUtils.errorDialog(context,
-                            "We need to request your permission to read ");
+                            "There is no data for export!");
                       }
                     } else {
                       dialogUtils.errorDialog(context,
@@ -127,8 +129,38 @@ class SettingsTab extends StatelessWidget {
                         value: provider.isSwitchedHoneyWell,
                         onChanged: (v) {
                           provider.isSwitchedHoneyWell = v;
+                          session.setBool(session.SCANNER,v);
                         }),
                   ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Divider(),
+                SizedBox(
+                  height: 10.h,
+                ),
+                InkWell(
+                  onTap: () async {
+                    session.setBool(session.LOGIN, false);
+                    Navigator.pushNamedAndRemoveUntil(context, RoutePaths.LOGIN, (route) => false);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: CText(
+                          text: 'Logout',
+                          size: 16.5.sp,
+                        ),
+                      ),
+                      Icon(
+                        Icons.logout,
+                        size: 30.r,
+                        color: ColorRes.grey_9C9C9C,
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 10.h,
@@ -223,10 +255,10 @@ class SettingsTab extends StatelessWidget {
                         .then((value) {
                       print(value);
 
-                      if (value.path == 'storage/emulated/0/Download/${provider.fileNameController.text}.xlsx') {
-
-// Hive.box("inbound_database").clear();
-                      }
+//                       if (value.path == 'storage/emulated/0/Download/${provider.fileNameController.text}.xlsx') {
+//
+// // Hive.box("inbound_database").clear();
+//                       }
                       Navigator.of(context).pop();
                     }).catchError((onError, stackTrace) {
                       print(onError);

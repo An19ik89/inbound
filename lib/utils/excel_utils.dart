@@ -24,11 +24,11 @@ class ExcelUtils {
     var A1 = worksheet.getRangeByIndex(1, 1);
     A1.cellStyle.vAlign = VAlignType.center;
     A1.cellStyle.hAlign = HAlignType.center;
-    A1.columnWidth = 12;
+    A1.columnWidth = 13;
     var A2 = worksheet.getRangeByIndex(1, 2);
     A2.cellStyle.vAlign = VAlignType.center;
     A2.cellStyle.hAlign = HAlignType.center;
-    A2.columnWidth = 10;
+    A2.columnWidth = 13;
     var A3 = worksheet.getRangeByIndex(1, 3);
     A3.cellStyle.vAlign = VAlignType.center;
     A3.cellStyle.hAlign = HAlignType.center;
@@ -56,28 +56,29 @@ class ExcelUtils {
     var A9 = worksheet.getRangeByIndex(1, 9);
     A9.cellStyle.vAlign = VAlignType.center;
     A9.cellStyle.hAlign = HAlignType.center;
-    A9.columnWidth = 13.8;
+    A9.columnWidth = 14;
     var A10 = worksheet.getRangeByIndex(1, 10);
     A10.cellStyle.vAlign = VAlignType.center;
     A10.cellStyle.hAlign = HAlignType.center;
-    A10.columnWidth = 13.8;
+    A10.columnWidth = 14;
     var A11 = worksheet.getRangeByIndex(1, 11);
     A11.cellStyle.vAlign = VAlignType.center;
     A11.cellStyle.hAlign = HAlignType.center;
-    A11.columnWidth = 13.8;
+    A11.columnWidth = 14;
     var A12 = worksheet.getRangeByIndex(1, 12);
     A12.cellStyle.vAlign = VAlignType.center;
     A12.cellStyle.hAlign = HAlignType.center;
-    A12.columnWidth = 13.8;
+    A12.columnWidth = 14;
     var A13 = worksheet.getRangeByIndex(1, 13);
     A13.cellStyle.vAlign = VAlignType.center;
     A13.cellStyle.hAlign = HAlignType.center;
-    A13.columnWidth = 13.8;
+    A13.columnWidth = 14;
+    var A14 = worksheet.getRangeByIndex(1, 14);
+    A14.cellStyle.vAlign = VAlignType.center;
+    A14.cellStyle.hAlign = HAlignType.center;
+    A14.columnWidth = 14;
 
-    // var A14 = worksheet.getRangeByIndex(1, 14);
-    // A14.cellStyle.vAlign = VAlignType.center;
-    // A14.cellStyle.hAlign = HAlignType.center;
-    // A14.columnWidth = 15;
+
 
     // Excel header
     A1.setText(session.getString(session.Date));
@@ -88,11 +89,12 @@ class ExcelUtils {
     A6.setText(session.getString(session.MaterialNo));
     A7.setText(session.getString(session.ReelNo));
     A8.setText(session.getString(session.Qyt));
-    A9.setText('Pic 1');
-    A10.setText('Pic 2');
-    A11.setText('Pic 3');
-    A12.setText('Pic 4');
-    A13.setText('Pic 5');
+    A9.setText('Checked by');
+    A10.setText('Pic 1');
+    A11.setText('Pic 2');
+    A12.setText('Pic 3');
+    A13.setText('Pic 4');
+    A14.setText('Pic 5');
     int i = 2;
     for (String key in Hive.box("inbound_database").keys) {
       DataModel dm = Hive.box("inbound_database").get(key);
@@ -130,9 +132,13 @@ class ExcelUtils {
       h.cellStyle.vAlign = VAlignType.center;
       h.cellStyle.hAlign = HAlignType.center;
       h.setValue(dm.quantity);
+      var j = worksheet.getRangeByIndex(i, 9);
+      j.cellStyle.vAlign = VAlignType.center;
+      j.cellStyle.hAlign = HAlignType.center;
+      j.setValue(session.getLoginUser());
       for (int j = 0; j < dm.imageUrls!.length; j++) {
 
-        var picture = worksheet.pictures.addBase64(i, j + 9, dm.imageUrls![j]);
+        var picture = worksheet.pictures.addBase64(i, j + 10, dm.imageUrls![j]);
         picture.width = 100;
         picture.height = 100;
 

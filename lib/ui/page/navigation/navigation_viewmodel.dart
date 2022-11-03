@@ -34,6 +34,7 @@ class NavigationViewModel with ChangeNotifier {
     qytFieldController.text = session.getString(session.Qyt);
     dateFieldController.text = session.getString(session.Date);
     slFieldController.text = session.getString(session.Sl);
+    _isSwitchedHoneyWell = session.getBool(session.SCANNER);
 
     getDatabaseData();
 
@@ -98,8 +99,14 @@ class NavigationViewModel with ChangeNotifier {
 
     if (!Hive.box("inbound_database").containsKey(reelNoController.text)) {
       Hive.box("inbound_database").put(reelNoController.text,dataModel).then((_)  async {
-        clearDatabaseDate();
 
+        const snackBar = SnackBar(
+          content: Text(
+              'Data Saved !'),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+        clearDatabaseDate();
         await getDatabaseData();
       });
     }
@@ -129,8 +136,6 @@ class NavigationViewModel with ChangeNotifier {
 
   }
 
-
-
   void clearDatabaseDate(){
     qytController.clear();
     reelNoController.clear();
@@ -138,8 +143,6 @@ class NavigationViewModel with ChangeNotifier {
     _base64ImageList = [];
     notifyListeners();
   }
-
-
 
   // Controller field
   TextEditingController containerSlFieldController = TextEditingController();
@@ -165,6 +168,8 @@ class NavigationViewModel with ChangeNotifier {
 
 
   // --------- DetailsPage ---------
+// Controller
+  TextEditingController dbClearController = TextEditingController();
 
   List<DataModel> _dataModelList = [];
   List<DataModel> get dataModelList => _dataModelList;
@@ -185,6 +190,15 @@ class NavigationViewModel with ChangeNotifier {
 
   set isSwitchedHoneyWell(bool value) {
     _isSwitchedHoneyWell = value;
+    notifyListeners();
+  }
+
+
+
+  clearDatabase(){
+    Hive.box("inbound_database").clear();
+    _dataModelList.clear();
+    _dataModelList = [];
     notifyListeners();
   }
 

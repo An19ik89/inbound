@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:inbound_flutter/ui/page/navigation/navigation_viewmodel.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
+import 'package:inbound_flutter/ui/widget/c_textfield.dart';
 import 'package:inbound_flutter/ui/widget/details_item.dart';
 import 'package:inbound_flutter/utils/res/color_res.dart';
 import 'package:inbound_flutter/utils/res/font_res.dart';
@@ -17,9 +18,6 @@ class DetailsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<NavigationViewModel>(context);
-    print("Data model list in details tab : ${Provider.of<NavigationViewModel>(context).dataModelList.length}");
-    print("image url list in details tab : ${Provider.of<NavigationViewModel>(context).dataModelList[0].imageUrls!.length}");
-    //provider.getDatabaseData();
     return   SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
@@ -35,14 +33,36 @@ class DetailsTab extends StatelessWidget {
                ],
              ),
             SizedBox(height:  20.h,),
+            provider.dataModelList.length > 0 ?    InkWell(
+              onTap: () async {
+                FocusManager.instance.primaryFocus?.unfocus();
+                alertClearDbDialog(provider,context);
+
+
+              },
+              child: Container(
+                height: 50.h,
+                width: double.infinity,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: ColorRes.green_08BA64,
+                    borderRadius: BorderRadius.circular(12.5.r)),
+                child: const CText(
+                  text: 'Clear Data',
+                  color: Colors.white,
+                  textAlign: TextAlign.center,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: FontRes.medium,
+                ),
+              ),
+            ) : SizedBox.shrink(),
+            SizedBox(height:  20.h,),
             ListView.builder(
               scrollDirection: Axis.vertical,
               itemCount: provider.dataModelList.length ,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (_, index) {
-                //Uint8List recieveImage = ((provider.dataModelList[index].imageUrls?.length ?? 0) > 0 ? convertion(provider.dataModelList[index].imageUrls![0]):convertion('')) as Uint8List;
-                //print("Image in details : ${recieveImage.toString()}");
                 return InkWell(
                   onTap: () {},
                   child: Container(
@@ -69,14 +89,57 @@ class DetailsTab extends StatelessWidget {
       ),
     );
   }
-   Future convertion(String baseImageData) async{
-    if(baseImageData.isNotEmpty){
-      Uint8List converted =  await Base64Decoder().convert(baseImageData ??'');
-      return converted;
-    }
-    else{
-      return "";
-    }
+
+
+  alertClearDbDialog(NavigationViewModel provider, context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: CText(
+              text: 'Key',
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+              size: 20.sp,
+              fontFamily: FontRes.bold,
+            ),
+            content: CTextField(
+                hint_text: 'Password',
+                controller: provider.dbClearController,
+                textInputType: TextInputType.text),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: CText(
+                  text: 'Cancel',
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  size: 16.sp,
+                  fontFamily: FontRes.medium,
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: ColorRes.green_08BA64),
+                onPressed: () {
+                  if(provider.dbClearController.text == provider.session.default_db){
+                    provider.clearDatabase();
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: CText(
+                  text: 'Accept',
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  size: 16.sp,
+                  fontFamily: FontRes.medium,
+                ),
+              ),
+            ],
+          );
+        });
   }
 
 }

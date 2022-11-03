@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.amber,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              initialRoute: RoutePaths.NAVIGATOR,
+              initialRoute: RoutePaths.SPLASH,
               onGenerateRoute:  Routes.generateRoute,
             );
           }),
