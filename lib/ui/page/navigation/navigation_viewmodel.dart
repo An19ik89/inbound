@@ -97,10 +97,10 @@ class NavigationViewModel with ChangeNotifier {
     dataModel.imageUrls = _base64ImageList;
 
     if (!Hive.box("inbound_database").containsKey(reelNoController.text)) {
-      Hive.box("inbound_database").put(reelNoController.text,dataModel).then((_)  {
+      Hive.box("inbound_database").put(reelNoController.text,dataModel).then((_)  async {
         clearDatabaseDate();
 
-        getDatabaseData();
+        await getDatabaseData();
       });
     }
     else{
@@ -135,7 +135,7 @@ class NavigationViewModel with ChangeNotifier {
     qytController.clear();
     reelNoController.clear();
     _listImage.clear();
-    _base64ImageList.clear();
+    //_base64ImageList.clear();
     notifyListeners();
   }
 
@@ -168,8 +168,9 @@ class NavigationViewModel with ChangeNotifier {
 
   List<DataModel> _dataModelList = [];
   List<DataModel> get dataModelList => _dataModelList;
-  void getDatabaseData(){
+   getDatabaseData(){
     _dataModelList.clear();
+    _dataModelList = [];
     for(String key in Hive.box("inbound_database").keys) {
       _dataModelList.add(Hive.box("inbound_database").get(key));
     }

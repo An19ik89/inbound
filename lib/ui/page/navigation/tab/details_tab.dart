@@ -17,6 +17,9 @@ class DetailsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<NavigationViewModel>(context);
+    print("Data model list in details tab : ${Provider.of<NavigationViewModel>(context).dataModelList.length}");
+    print("image url list in details tab : ${Provider.of<NavigationViewModel>(context).dataModelList[0].imageUrls!.length}");
+    //provider.getDatabaseData();
     return   SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
@@ -51,7 +54,8 @@ class DetailsTab extends StatelessWidget {
                       warehouse: provider.dataModelList[index].warehouse,
                       metarial_no: provider.dataModelList[index].materialNo,
                       qyt: provider.dataModelList[index].quantity,
-                      image_link: (provider.dataModelList[index].imageUrls?.length ?? 0) > 0 ? provider.dataModelList[index].imageUrls![0]:'',
+                      image_link: Provider.of<NavigationViewModel>(context).dataModelList[index].imageUrls![0].toString(),
+                      //image_link: (provider.dataModelList[index].imageUrls?.length ?? 0) > 0 ? provider.dataModelList[index].imageUrls![0]:'',
                       campaign_date: provider.dataModelList[index].date,
                       image_quantity: (provider.dataModelList[index].imageUrls?.length ?? 0) > 0 ? provider.dataModelList[index].imageUrls!.length > 1 ? (provider.dataModelList[index].imageUrls!.length).toString()+" +" :'':'',
 

@@ -33,6 +33,7 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<NavigationViewModel>(context);
+
     return   SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),

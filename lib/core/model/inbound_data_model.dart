@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'package:hive/hive.dart';
-import 'package:image_picker/image_picker.dart';
-
 part 'inbound_data_model.g.dart';
 
 List<DataModel> dataModelFromJson(String str) => List<DataModel>.from(json.decode(str).map((x) => DataModel.fromJson(x)));
