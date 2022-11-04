@@ -26,7 +26,7 @@ class NavigationState extends State<NavigationPage> {
   Widget build(BuildContext context) {
     var provider = Provider.of<NavigationViewModel>(context);
     return Container(
-        color: Colors.amber,
+        color: ColorRes.purple_6f2265,
         child: SafeArea(
         bottom: false,
         child: Scaffold(
@@ -36,11 +36,13 @@ class NavigationState extends State<NavigationPage> {
         backgroundColor: Colors.white,
         currentIndex: provider.currentIndex,
         type: BottomNavigationBarType.fixed,
+        selectedItemColor: ColorRes.purple_6f2265,
+        unselectedItemColor: Colors.grey.shade400,
         selectedLabelStyle: TextStyle(
           fontFamily:  FontRes.regular,
           decoration:  TextDecoration.none,
           overflow: TextOverflow.ellipsis,
-          color:   Colors.amber,
+          color:   ColorRes.purple_6f2265,
           fontSize:  13.5.sp,
           fontWeight:FontWeight.w400,
         ),

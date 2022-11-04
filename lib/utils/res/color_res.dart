@@ -15,5 +15,6 @@ class ColorRes{
   static  const Color white_BFFFFFFF = Color(0xBFFFFFFF);
   static  const Color white_CCFFFFFF = Color(0xCCFFFFFF);
   static  const Color white_4DD0D0D0= Color(0x4DD0D0D0);
+  static  const Color purple_6f2265= Color(0xFF6f2265);
 
 }

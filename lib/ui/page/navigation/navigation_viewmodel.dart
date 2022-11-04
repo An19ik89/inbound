@@ -97,8 +97,9 @@ class NavigationViewModel with ChangeNotifier {
     dataModel.quantity = qytController.text;
     dataModel.imageUrls = _base64ImageList;
 
-    if (!Hive.box("inbound_database").containsKey(reelNoController.text)) {
-      Hive.box("inbound_database").put(reelNoController.text,dataModel).then((_)  async {
+    if (!Hive.box("inbound_database_key").containsKey(reelNoController.text)) {
+      Hive.box("inbound_database_key").put(reelNoController.text,true);
+      Hive.box("inbound_database").add(dataModel).then((_)  async {
 
         const snackBar = SnackBar(
           content: Text(
@@ -162,6 +163,33 @@ class NavigationViewModel with ChangeNotifier {
     session.setString(session.Qyt, qytFieldController.text);
     session.setString(session.Date, dateFieldController.text);
     session.setString(session.Sl, slFieldController.text);
+
+    containerSlFieldController.clear();
+    sealNoFieldController.clear();
+    wareHouseFieldController.clear();
+    materialNoFieldController.clear();
+    qytFieldController.clear();
+    dateFieldController.clear();
+    slFieldController.clear();
+    notifyListeners();
+  }
+
+  void title_reset_data(){
+    session.setString(session.ContainerSl, session.ContainerSl);
+    session.setString(session.SealNo, session.SealNo);
+    session.setString(session.WareHouse, session.WareHouse);
+    session.setString(session.MaterialNo, session.MaterialNo);
+    session.setString(session.Qyt, session.Qyt);
+    session.setString(session.Date, session.Date);
+    session.setString(session.Sl, session.Sl);
+
+    containerSlFieldController.clear();
+    sealNoFieldController.clear();
+    wareHouseFieldController.clear();
+    materialNoFieldController.clear();
+    qytFieldController.clear();
+    dateFieldController.clear();
+    slFieldController.clear();
     notifyListeners();
   }
 
@@ -176,7 +204,7 @@ class NavigationViewModel with ChangeNotifier {
    getDatabaseData(){
     _dataModelList.clear();
     _dataModelList = [];
-    for(String key in Hive.box("inbound_database").keys) {
+    for(int key in Hive.box("inbound_database").keys) {
       _dataModelList.add(Hive.box("inbound_database").get(key));
     }
     notifyListeners();
@@ -197,6 +225,7 @@ class NavigationViewModel with ChangeNotifier {
 
   clearDatabase(){
     Hive.box("inbound_database").clear();
+    Hive.box("inbound_database_key").clear();
     _dataModelList.clear();
     _dataModelList = [];
     notifyListeners();

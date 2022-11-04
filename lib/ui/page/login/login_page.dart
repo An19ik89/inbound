@@ -60,7 +60,7 @@ class _LoginState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(12.5.r),
                         borderSide: const BorderSide(
                           width: .5,
-                          color: Colors.amber,
+                          color: ColorRes.purple_6f2265,
                           style: BorderStyle.solid,
                         ),
                       ),
@@ -103,7 +103,7 @@ class _LoginState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(12.5.r),
                         borderSide:const BorderSide(
                           width: .5,
-                          color: Colors.amber,
+                          color: ColorRes.purple_6f2265,
                           style: BorderStyle.solid,
                         ),
                       ),
@@ -164,7 +164,7 @@ class _LoginState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(12.5.r),
                         borderSide: const BorderSide(
                           width: .5,
-                          color: Colors.amber,
+                          color: ColorRes.purple_6f2265,
                           style: BorderStyle.solid,
                         ),
                       ),

@@ -96,7 +96,7 @@ class ExcelUtils {
     A13.setText('Pic 4');
     A14.setText('Pic 5');
     int i = 2;
-    for (String key in Hive.box("inbound_database").keys) {
+    for (int key in Hive.box("inbound_database").keys) {
 
       DataModel dm = Hive.box("inbound_database").get(key);
       //print (dm.quantity);

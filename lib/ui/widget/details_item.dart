@@ -32,7 +32,7 @@ class DetailsItem extends StatelessWidget {
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey, width: 0.2.r),
           borderRadius: BorderRadius.all(Radius.circular(15.r)),
-        color: Colors.amber.shade50,),
+        color: ColorRes.purple_6f2265.withOpacity(0.09),),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

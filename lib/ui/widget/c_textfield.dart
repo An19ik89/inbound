@@ -42,7 +42,7 @@ class CTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.5.r),
           borderSide: BorderSide(
             width: .5,
-            color: Colors.amber,
+            color: ColorRes.purple_6f2265,
             style: BorderStyle.solid,
           ),
         ),

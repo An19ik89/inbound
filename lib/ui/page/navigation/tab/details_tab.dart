@@ -26,7 +26,7 @@ class DetailsTab extends StatelessWidget {
 
              Row(
                children: [
-                 CText(text:  'Total Scanned : ',size: 25.sp,color: Colors.black,fontWeight: FontWeight.w700,fontFamily: FontRes.bold,),
+                 CText(text:  'Total Scanned : ',size: 25.sp,color: ColorRes.purple_6f2265,fontWeight: FontWeight.w700,fontFamily: FontRes.bold,),
                  SizedBox(width: 13.w,),
                  CText(text:  provider.dataModelList.length .toString(),size: 25.sp,color: ColorRes.green_08BA64,fontWeight: FontWeight.w500,fontFamily: FontRes.bold,),
                ],

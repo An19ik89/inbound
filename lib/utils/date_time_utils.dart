@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:inbound_flutter/utils/res/color_res.dart';
 
 class DateTimeUtils{
   Future<DateTime?> selectDateFromPicker(BuildContext context) async {
@@ -12,7 +13,7 @@ class DateTimeUtils{
           return Theme(
             data: ThemeData(
               colorScheme: ColorScheme.light(
-                primary: Colors.amber,
+                primary: ColorRes.purple_6f2265,
               ),
               dialogTheme: DialogTheme(
                   shape: RoundedRectangleBorder(

@@ -30,12 +30,25 @@ class SettingsTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            ImageRes.settings_background,
-            height: 160.h,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
+        Stack(
+          children: [
+            Image.asset(
+              ImageRes.settings_background,
+              height: 160.h,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+            Positioned(
+              top: 25,
+              left: 25,
+              child: CText(
+              text: 'Checked by : ' +provider.session.getAssignWorker(),
+              size: 22.5.sp,fontFamily: FontRes.bold,
+                color: ColorRes.purple_6f2265,
+
+            ),)
+          ],
+        ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
             child: Column(

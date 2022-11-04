@@ -57,7 +57,7 @@ class HomeTab extends StatelessWidget {
                         height: 50.h,
                         decoration: BoxDecoration(
                             border:
-                            Border.all(color: Colors.amber, width: 0.5.r),
+                            Border.all(color: ColorRes.purple_6f2265, width: 0.5.r),
                             borderRadius:
                             BorderRadius.all(Radius.circular(12.5.r)),
                             color: Colors.white),
@@ -209,7 +209,7 @@ class HomeTab extends StatelessWidget {
                         width: double.infinity,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            color: Colors.amber,
+                            color: ColorRes.purple_6f2265,
                             borderRadius: BorderRadius.circular(12.5.r)),
                         child: const CText(
                           text: 'SCAN BARCODE',
@@ -251,7 +251,7 @@ class HomeTab extends StatelessWidget {
                         width: double.infinity,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            color: Colors.amber,
+                            color: ColorRes.purple_6f2265,
                             borderRadius: BorderRadius.circular(12.5.r)),
                         child: const CText(
                           text: 'CAMERA',

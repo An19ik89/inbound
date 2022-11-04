@@ -7,7 +7,7 @@ class QrScanUtils{
     String barcodeScanRes = '';
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+          '#08BA64', 'Cancel', true, ScanMode.BARCODE);
       if (kDebugMode) {
         print(barcodeScanRes);
       }

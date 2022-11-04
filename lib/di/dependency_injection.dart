@@ -38,6 +38,7 @@ Future<void> setup() async {
   await Hive.initFlutter();
   Hive.init(externalDir.path);
   await Hive.openBox("inbound_database");
+  await Hive.openBox("inbound_database_key");
 
   //local
   di.registerSingleton<SharedPreferences>(await SharedPreferences.getInstance());
