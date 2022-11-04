@@ -68,26 +68,22 @@ class SettingsTab extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                Divider(),
+                const Divider(),
                 SizedBox(
                   height: 10.h,
                 ),
                 InkWell(
                   onTap: () async {
                     Map<Permission, PermissionStatus> statuses = await [Permission.storage,].request();
-                    if (statuses[Permission.storage].toString() ==
-                        "PermissionStatus.granted") {
+                    if (statuses[Permission.storage].toString() == "PermissionStatus.granted") {
                       if (Hive.box("inbound_database").length > 0) {
-                        provider.fileNameController.text =
-                            "${DateTime.now().day}_${DateTime.now().month}_${DateTime.now().year}_${DateTime.now().millisecond}";
+                        provider.fileNameController.text = "${DateTime.now().day}_${DateTime.now().month}_${DateTime.now().year}_${DateTime.now().millisecond}";
                         alertFileDialog(provider, context);
                       } else {
-                        dialogUtils.errorDialog(context,
-                            "There is no data for export!");
+                        dialogUtils.errorDialog(context, "There is no data for export!");
                       }
                     } else {
-                      dialogUtils.errorDialog(context,
-                          "We need to request your permission to read ");
+                      dialogUtils.errorDialog(context, "We need to request your permission to read ");
                     }
                   },
                   child: Row(
@@ -110,7 +106,7 @@ class SettingsTab extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                Divider(),
+                const Divider(),
                 SizedBox(
                   height: 10.h,
                 ),
@@ -136,13 +132,14 @@ class SettingsTab extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                Divider(),
+                const Divider(),
                 SizedBox(
                   height: 10.h,
                 ),
                 InkWell(
                   onTap: () async {
                     session.setBool(session.LOGIN, false);
+                    session.setAssignWorker('');
                     Navigator.pushNamedAndRemoveUntil(context, RoutePaths.LOGIN, (route) => false);
                   },
                   child: Row(
@@ -165,7 +162,7 @@ class SettingsTab extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                Divider(),
+                const Divider(),
               ],
             ),
           )
@@ -192,7 +189,7 @@ class SettingsTab extends StatelessWidget {
                 textInputType: TextInputType.text),
             actions: [
               ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -205,7 +202,7 @@ class SettingsTab extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: ColorRes.green_08BA64),
+                style: ElevatedButton.styleFrom(backgroundColor: ColorRes.green_08BA64),
                 onPressed: () {
                   if (!File('storage/emulated/0/Download/${provider.fileNameController.text}.xlsx')
                       .existsSync()) {
@@ -253,15 +250,10 @@ class SettingsTab extends StatelessWidget {
                     excelUtils
                         .createExcel(provider.fileNameController.text)
                         .then((value) {
-                      print(value);
 
-//                       if (value.path == 'storage/emulated/0/Download/${provider.fileNameController.text}.xlsx') {
-//
-// // Hive.box("inbound_database").clear();
-//                       }
                       Navigator.of(context).pop();
                     }).catchError((onError, stackTrace) {
-                      print(onError);
+
                       Navigator.of(context).pop();
                     });
                   }

@@ -24,59 +24,59 @@ class ExcelUtils {
     var A1 = worksheet.getRangeByIndex(1, 1);
     A1.cellStyle.vAlign = VAlignType.center;
     A1.cellStyle.hAlign = HAlignType.center;
-    A1.columnWidth = 13;
+    A1.columnWidth = 15;
     var A2 = worksheet.getRangeByIndex(1, 2);
     A2.cellStyle.vAlign = VAlignType.center;
     A2.cellStyle.hAlign = HAlignType.center;
-    A2.columnWidth = 13;
+    A2.columnWidth = 12;
     var A3 = worksheet.getRangeByIndex(1, 3);
     A3.cellStyle.vAlign = VAlignType.center;
     A3.cellStyle.hAlign = HAlignType.center;
-    A3.columnWidth = 13;
+    A3.columnWidth = 15;
     var A4 = worksheet.getRangeByIndex(1, 4);
     A4.cellStyle.vAlign = VAlignType.center;
     A4.cellStyle.hAlign = HAlignType.center;
-    A4.columnWidth = 13;
+    A4.columnWidth = 15;
     var A5 = worksheet.getRangeByIndex(1, 5);
     A5.cellStyle.vAlign = VAlignType.center;
     A5.cellStyle.hAlign = HAlignType.center;
-    A5.columnWidth = 13;
+    A5.columnWidth = 15;
     var A6 = worksheet.getRangeByIndex(1, 6);
     A6.cellStyle.vAlign = VAlignType.center;
     A6.cellStyle.hAlign = HAlignType.center;
-    A6.columnWidth = 13;
+    A6.columnWidth = 15;
     var A7 = worksheet.getRangeByIndex(1, 7);
     A7.cellStyle.vAlign = VAlignType.center;
     A7.cellStyle.hAlign = HAlignType.center;
-    A7.columnWidth = 13;
+    A7.columnWidth = 15;
     var A8 = worksheet.getRangeByIndex(1, 8);
     A8.cellStyle.vAlign = VAlignType.center;
     A8.cellStyle.hAlign = HAlignType.center;
-    A8.columnWidth = 13;
+    A8.columnWidth = 15;
     var A9 = worksheet.getRangeByIndex(1, 9);
     A9.cellStyle.vAlign = VAlignType.center;
     A9.cellStyle.hAlign = HAlignType.center;
-    A9.columnWidth = 14;
+    A9.columnWidth = 20;
     var A10 = worksheet.getRangeByIndex(1, 10);
     A10.cellStyle.vAlign = VAlignType.center;
     A10.cellStyle.hAlign = HAlignType.center;
-    A10.columnWidth = 14;
+    A10.columnWidth = 18;
     var A11 = worksheet.getRangeByIndex(1, 11);
     A11.cellStyle.vAlign = VAlignType.center;
     A11.cellStyle.hAlign = HAlignType.center;
-    A11.columnWidth = 14;
+    A11.columnWidth = 18;
     var A12 = worksheet.getRangeByIndex(1, 12);
     A12.cellStyle.vAlign = VAlignType.center;
     A12.cellStyle.hAlign = HAlignType.center;
-    A12.columnWidth = 14;
+    A12.columnWidth = 18;
     var A13 = worksheet.getRangeByIndex(1, 13);
     A13.cellStyle.vAlign = VAlignType.center;
     A13.cellStyle.hAlign = HAlignType.center;
-    A13.columnWidth = 14;
+    A13.columnWidth = 18;
     var A14 = worksheet.getRangeByIndex(1, 14);
     A14.cellStyle.vAlign = VAlignType.center;
     A14.cellStyle.hAlign = HAlignType.center;
-    A14.columnWidth = 14;
+    A14.columnWidth = 18;
 
 
 
@@ -97,12 +97,13 @@ class ExcelUtils {
     A14.setText('Pic 5');
     int i = 2;
     for (String key in Hive.box("inbound_database").keys) {
+
       DataModel dm = Hive.box("inbound_database").get(key);
       //print (dm.quantity);
       var a = worksheet.getRangeByIndex(i, 1);
       a.cellStyle.vAlign = VAlignType.center;
       a.cellStyle.hAlign = HAlignType.center;
-      a.rowHeight = 67.5;
+      a.rowHeight = 98;
       a.setValue(dm.date);
       var b = worksheet.getRangeByIndex(i, 2);
       b.cellStyle.vAlign = VAlignType.center;
@@ -132,15 +133,15 @@ class ExcelUtils {
       h.cellStyle.vAlign = VAlignType.center;
       h.cellStyle.hAlign = HAlignType.center;
       h.setValue(dm.quantity);
-      var j = worksheet.getRangeByIndex(i, 9);
-      j.cellStyle.vAlign = VAlignType.center;
-      j.cellStyle.hAlign = HAlignType.center;
-      j.setValue(session.getLoginUser());
+      var k = worksheet.getRangeByIndex(i, 9);
+      k.cellStyle.vAlign = VAlignType.center;
+      k.cellStyle.hAlign = HAlignType.center;
+      k.setValue(session.getAssignWorker());
       for (int j = 0; j < dm.imageUrls!.length; j++) {
 
-        var picture = worksheet.pictures.addBase64(i, j + 10, dm.imageUrls![j]);
-        picture.width = 100;
-        picture.height = 100;
+         var picture = worksheet.pictures.addBase64(i, j + 10, dm.imageUrls![j]);
+         picture.width = 120;
+         picture.height = 120;
 
       }
       i++;

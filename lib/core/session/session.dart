@@ -10,6 +10,7 @@ abstract class Session
   final String default_db = 'db123456';
   final String USER = 'USER';
   final String PASSWORD = 'PASSWORD';
+  final String ASSIGN_WORKER = 'ASSIGN WORKER';
 
 
   final String ContainerSl = 'Container Sl';
@@ -33,8 +34,12 @@ abstract class Session
 
   void setLoginUser( String value);
   String getLoginUser();
+
   void setLoginPassword( String value);
   String getLoginPassword();
+
+  void setAssignWorker( String value);
+  String getAssignWorker();
 
   void removeAll();
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:inbound_flutter/core/route/route_paths.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
@@ -41,7 +40,7 @@ class _LoginState extends State<LoginPage> {
                   ),
                   TextField(
                     autofocus: false,
-                    controller: provider.emailController,
+                    controller: provider.nameController,
                     keyboardType: TextInputType.text,
                     style: TextStyle(
                         color: Colors.black,
@@ -51,7 +50,7 @@ class _LoginState extends State<LoginPage> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.5.r),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           width: .5,
                           color: ColorRes.grey_9C9C9C,
                           style: BorderStyle.solid,
@@ -59,7 +58,7 @@ class _LoginState extends State<LoginPage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.5.r),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           width: .5,
                           color: Colors.amber,
                           style: BorderStyle.solid,
@@ -94,7 +93,7 @@ class _LoginState extends State<LoginPage> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.5.r),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           width: .5,
                           color: ColorRes.grey_9C9C9C,
                           style: BorderStyle.solid,
@@ -102,7 +101,7 @@ class _LoginState extends State<LoginPage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.5.r),
-                        borderSide: BorderSide(
+                        borderSide:const BorderSide(
                           width: .5,
                           color: Colors.amber,
                           style: BorderStyle.solid,
@@ -137,7 +136,50 @@ class _LoginState extends State<LoginPage> {
                               size: 25.r,
                             )),
                       ),
-                      suffixIconConstraints: BoxConstraints(),
+                      suffixIconConstraints: const BoxConstraints(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  TextField(
+                    autofocus: false,
+                    controller: provider.assignWorkerController,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: FontRes.regular),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.5.r),
+                        borderSide: const BorderSide(
+                          width: .5,
+                          color: ColorRes.grey_9C9C9C,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.5.r),
+                        borderSide: const BorderSide(
+                          width: .5,
+                          color: Colors.amber,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      isDense: true,
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+                      hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: FontRes.regular),
+                      hintText: 'Assign Worker',
+
                     ),
                   ),
                   SizedBox(
@@ -147,7 +189,7 @@ class _LoginState extends State<LoginPage> {
                     onTap: () async {
                       FocusManager.instance.primaryFocus?.unfocus();
 
-                      provider.login(provider.emailController.text, provider.passwordController.text, context);
+                      provider.login(provider.nameController.text, provider.passwordController.text,provider.assignWorkerController.text, context);
 
                     },
                     child: Container(
@@ -178,7 +220,7 @@ class _LoginState extends State<LoginPage> {
                      Navigator.of(context).pushNamed(RoutePaths.REGISTRATION);
 
                     },
-                    child: CText(
+                    child: const CText(
                       text: 'Create Account ?',
                       color: ColorRes.green_08BA64,
                       textAlign: TextAlign.center,

@@ -1,11 +1,10 @@
 
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:inbound_flutter/core/session/session.dart';
 import 'package:inbound_flutter/di/dependency_injection.dart';
 import 'package:inbound_flutter/ui/page/navigation/navigation_viewmodel.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
@@ -23,12 +22,15 @@ import 'package:provider/provider.dart';
 
 
 class HomeTab extends StatelessWidget {
+   HomeTab({Key? key}) : super(key: key);
   var imageUtils = di<ImageUtils>();
   var dateTimeUtils = di<DateTimeUtils>();
   var excelUtils = di<ExcelUtils>();
   var dialogUtils = di<AlertDialogUtils>();
   var qrcanUtils = di<QrScanUtils>();
-  final Session session = di<Session>();
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class HomeTab extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             CText(
-                              text: session.getString(session.Date),
+                              text: provider.session.getString(provider.session.Date),
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(
@@ -110,13 +112,13 @@ class HomeTab extends StatelessWidget {
                     Row(
                       children: [
                         CText(
-                          text: '${session.getString(session.ContainerSl)} : ',
+                          text: '${provider.session.getString(provider.session.ContainerSl)} : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
                             child: CTextField(
                                 hint_text:
-                                session.getString(session.ContainerSl),
+                                provider.session.getString(provider.session.ContainerSl),
                                 controller: provider.containerSlController,
                                 textInputType: TextInputType.text))
                       ],
@@ -127,12 +129,12 @@ class HomeTab extends StatelessWidget {
                     Row(
                       children: [
                         CText(
-                          text: '${session.getString(session.SealNo)} : ',
+                          text: '${provider.session.getString(provider.session.SealNo)} : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
                             child: CTextField(
-                                hint_text: session.getString(session.SealNo),
+                                hint_text: provider.session.getString(provider.session.SealNo),
                                 controller: provider.sealNoController,
                                 textInputType: TextInputType.text))
                       ],
@@ -143,12 +145,12 @@ class HomeTab extends StatelessWidget {
                     Row(
                       children: [
                         CText(
-                          text: '${session.getString(session.WareHouse)} : ',
+                          text: '${provider.session.getString(provider.session.WareHouse)} : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
                             child: CTextField(
-                                hint_text: session.getString(session.WareHouse),
+                                hint_text: provider.session.getString(provider.session.WareHouse),
                                 controller: provider.wareHouseController,
                                 textInputType: TextInputType.text))
                       ],
@@ -159,13 +161,13 @@ class HomeTab extends StatelessWidget {
                     Row(
                       children: [
                         CText(
-                          text: '${session.getString(session.MaterialNo)} : ',
+                          text: '${provider.session.getString(provider.session.MaterialNo)} : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
                             child: CTextField(
                                 hint_text:
-                                session.getString(session.MaterialNo),
+                                provider.session.getString(provider.session.MaterialNo),
                                 controller: provider.materialNoController,
                                 textInputType: TextInputType.number))
                       ],
@@ -176,20 +178,20 @@ class HomeTab extends StatelessWidget {
                     Row(
                       children: [
                         CText(
-                          text: '${session.getString(session.Qyt)} : ',
+                          text: '${provider.session.getString(provider.session.Qyt)} : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
                             child: CTextField(
-                                hint_text: session.getString(session.Qyt),
+                                hint_text: provider.session.getString(provider.session.Qyt),
                                 controller: provider.qytController,
                                 textInputType: TextInputType.number))
                       ],
                     ),
-                    provider.isSwitchedHoneyWell ? SizedBox.shrink(): SizedBox(
+                    provider.isSwitchedHoneyWell ? const SizedBox.shrink(): SizedBox(
                       height: 13.h,
                     ),
-                   provider.isSwitchedHoneyWell ? SizedBox.shrink(): InkWell(
+                   provider.isSwitchedHoneyWell ? const SizedBox.shrink(): InkWell(
                       onTap: () {
                         FocusManager.instance.primaryFocus?.unfocus();
                         if (!provider.isSwitchedHoneyWell) {
@@ -223,13 +225,13 @@ class HomeTab extends StatelessWidget {
                     Row(
                       children: [
                         CText(
-                          text: '${session.getString(session.ReelNo)} : ',
+                          text: '${provider.session.getString(provider.session.ReelNo)} : ',
                           container_wight: 110.w,
                         ),
                         Flexible(
                             child: CTextField(
                                 hint_text:
-                                session.getString(session.ReelNo),
+                                provider.session.getString(provider.session.ReelNo),
                                 controller: provider.reelNoController,
                                 textInputType: TextInputType.text))
                       ],

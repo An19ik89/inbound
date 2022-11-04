@@ -54,4 +54,14 @@ class SessionImpl extends Session{
     preferences.setString(USER, value);
   }
 
+  @override
+  String getAssignWorker() {
+    return preferences.getString(ASSIGN_WORKER  ) ?? defaut_user;
+  }
+
+  @override
+  void setAssignWorker(String value) {
+    preferences.setString(ASSIGN_WORKER, value);
+  }
+
 }

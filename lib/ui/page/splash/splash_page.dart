@@ -62,7 +62,7 @@ class _SplashState extends State<SplashPage> {
                       onFinished: provider.onFinished ? (){ session.getBool(session.LOGIN)  ? Navigator.of(context).pushReplacementNamed(RoutePaths.NAVIGATOR):Navigator.of(context).pushReplacementNamed(RoutePaths.LOGIN);}:null,
 
                       animatedTexts: [
-                        WavyAnimatedText('Presented by CodeXive'),
+                        WavyAnimatedText('Powered by Javed Hossain'),
                       ],
 
                     ),
