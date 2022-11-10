@@ -8,19 +8,21 @@ class CTextField extends StatelessWidget {
   final String? hint_text;
   final TextEditingController?  controller;
   final TextInputType? textInputType;
+  final bool? enable;
 
 
   const CTextField(
       {Key? key,
         required this.hint_text,
         required this.controller,
-        required this.textInputType,
+        required this.textInputType, this.enable,
         })
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      enabled: enable ?? true,
       autofocus: false,
       controller: controller,
       keyboardType: textInputType,

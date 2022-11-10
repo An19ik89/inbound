@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:inbound_flutter/ui/widget/c_text.dart';
-import 'package:inbound_flutter/ui/widget/c_textfield.dart';
-import 'package:inbound_flutter/utils/res/color_res.dart';
 import 'package:inbound_flutter/utils/res/font_res.dart';
 
 class AlertDialogUtils{

@@ -6,6 +6,7 @@ import 'package:inbound_flutter/ui/page/login/login_page.dart';
 import 'package:inbound_flutter/ui/page/navigation/navigation_page.dart';
 import 'package:inbound_flutter/ui/page/registration/registration_page.dart';
 import 'package:inbound_flutter/ui/page/splash/splash_page.dart';
+import 'package:inbound_flutter/ui/page/update/update_page.dart';
 import 'route_paths.dart';
 
 
@@ -23,6 +24,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => di<FieldPage>());
       case RoutePaths.NAVIGATOR:
         return MaterialPageRoute(builder: (_) => di<NavigationPage>());
+        case RoutePaths.Update:
+        return MaterialPageRoute(builder: (_) => di<UpdatePage>());
 
       default:
         return MaterialPageRoute(

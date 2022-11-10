@@ -1,4 +1,5 @@
 
+import 'dart:convert';
 import 'dart:io';
 
 
@@ -243,7 +244,7 @@ class HomeTab extends StatelessWidget {
                       onTap: () {
                         FocusManager.instance.primaryFocus?.unfocus();
                         imageUtils.pickCameraImage().then((value) => {
-                          if (value != null) {provider.listImageAdd = value}
+                          if (value != null) {provider.base64ImageListAdd = value}
                         });
                       },
                       child: Container(
@@ -267,7 +268,7 @@ class HomeTab extends StatelessWidget {
                     SizedBox(
                       height: 110.h,
                       child: ListView.builder(
-                        itemCount: provider.listImage.length,
+                        itemCount: provider.base64ImageList.length,
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         itemBuilder: (_, index) {
@@ -282,12 +283,8 @@ class HomeTab extends StatelessWidget {
                                   child: ClipRRect(
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(12.5)),
-                                    child: Image.file(
-                                      File(provider.listImage[index]!.path),
-                                      height: 100.r,
-                                      width: 100.r,
-                                      fit: BoxFit.cover,
-                                    ),
+
+                                    child: Image.memory(Base64Decoder().convert(provider.base64ImageList[index] ??''), height: 100.h, width: 100.w, fit: BoxFit.cover,),
                                   ),
                                 ),
                                 Positioned(
@@ -295,7 +292,7 @@ class HomeTab extends StatelessWidget {
                                     right: -2.w,
                                     child: InkWell(
                                       onTap: () {
-                                        provider.listImageRemove = index;
+                                        provider.base64listImageRemove = index;
                                       },
                                       child: Icon(
                                         Icons.remove_circle,

@@ -4,6 +4,7 @@ class RoutePaths {
   static const String LOGIN = 'LOGIN';
   static const String SPLASH = 'SPLASH';
   static const String REGISTRATION = 'REGISTRATION';
+  static const String Update = 'Update';
 
 
 

@@ -12,6 +12,7 @@ import 'package:inbound_flutter/ui/widget/c_text.dart';
 import 'package:inbound_flutter/ui/widget/c_textfield.dart';
 import 'package:inbound_flutter/utils/alert_dialog_utils.dart';
 import 'package:inbound_flutter/utils/excel_utils.dart';
+import 'package:inbound_flutter/utils/file_share_utils.dart';
 import 'package:inbound_flutter/utils/res/color_res.dart';
 import 'package:inbound_flutter/utils/res/font_res.dart';
 import 'package:inbound_flutter/utils/res/image_res.dart';
@@ -21,6 +22,7 @@ import 'package:provider/provider.dart';
 class SettingsTab extends StatelessWidget {
   var dialogUtils = di<AlertDialogUtils>();
   var excelUtils = di<ExcelUtils>();
+  var fileShareUtils = di<FileShareUtils>();
   final Session session = di<Session>();
 
   @override
@@ -42,7 +44,7 @@ class SettingsTab extends StatelessWidget {
               top: 25,
               left: 25,
               child: CText(
-              text: 'Checked by : ' +provider.session.getAssignWorker(),
+              text: 'Checker : ' +provider.session.getAssignWorker(),
               size: 22.5.sp,fontFamily: FontRes.bold,
                 color: ColorRes.purple_6f2265,
 
@@ -87,7 +89,7 @@ class SettingsTab extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () async {
-                    Map<Permission, PermissionStatus> statuses = await [Permission.storage,].request();
+                    Map<Permission, PermissionStatus> statuses = await [Permission.storage,Permission.manageExternalStorage].request();
                     if (statuses[Permission.storage].toString() == "PermissionStatus.granted") {
                       if (Hive.box("inbound_database").length > 0) {
                         provider.fileNameController.text = "${DateTime.now().day}_${DateTime.now().month}_${DateTime.now().year}_${DateTime.now().millisecond}";
@@ -110,6 +112,42 @@ class SettingsTab extends StatelessWidget {
                       ),
                       Icon(
                         Icons.chevron_right_outlined,
+                        size: 30.r,
+                        color: ColorRes.grey_9C9C9C,
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                const Divider(),
+                SizedBox(
+                  height: 10.h,
+                ),
+
+                InkWell(
+                  onTap: () async {
+                    Map<Permission, PermissionStatus> statuses = await [Permission.storage,Permission.manageExternalStorage].request();
+                    if (statuses[Permission.storage].toString() == "PermissionStatus.granted") {
+
+                        fileShareUtils.shareFile();
+
+                    } else {
+                      dialogUtils.errorDialog(context, "We need to request your permission to read ");
+                    }
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: CText(
+                          text: 'Share',
+                          size: 16.5.sp,
+                        ),
+                      ),
+                      Icon(
+                        Icons.share,
                         size: 30.r,
                         color: ColorRes.grey_9C9C9C,
                       )
@@ -217,57 +255,57 @@ class SettingsTab extends StatelessWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: ColorRes.green_08BA64),
                 onPressed: () {
-                  if (!File('storage/emulated/0/Download/${provider.fileNameController.text}.xlsx')
-                      .existsSync()) {
+                  if (!File('storage/emulated/0/Download/${provider.fileNameController.text}.xlsx').existsSync()) {
                     Navigator.of(context).pop();
-                    showDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      builder: (context) {
-                        return AlertDialog(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          contentPadding: const EdgeInsets.all(0),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                          ),
-                          content: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            constraints: BoxConstraints(
-                              maxHeight:
-                                  MediaQuery.of(context).size.height / 1.7,
-                            ),
-                            width: 300.w,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4.r),
-                                color: Colors.transparent),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    CircularProgressIndicator(),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 50.h,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
+
+                    // showDialog(
+                    //   context: context,
+                    //   barrierDismissible: true,
+                    //   builder: (context) {
+                    //     return AlertDialog(
+                    //       backgroundColor: Colors.transparent,
+                    //       elevation: 0,
+                    //       contentPadding: const EdgeInsets.all(0),
+                    //       shape: const RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.all(Radius.circular(5)),
+                    //       ),
+                    //       content: Container(
+                    //         padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    //         constraints: BoxConstraints(
+                    //           maxHeight:
+                    //               MediaQuery.of(context).size.height / 1.7,
+                    //         ),
+                    //         width: 300.w,
+                    //         decoration: BoxDecoration(
+                    //             borderRadius: BorderRadius.circular(4.r),
+                    //             color: Colors.transparent),
+                    //         child: Column(
+                    //           mainAxisSize: MainAxisSize.min,
+                    //           children: <Widget>[
+                    //             Column(
+                    //               mainAxisSize: MainAxisSize.max,
+                    //               mainAxisAlignment: MainAxisAlignment.center,
+                    //               children: const [
+                    //                 CircularProgressIndicator(),
+                    //               ],
+                    //             ),
+                    //             SizedBox(
+                    //               height: 50.h,
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    // );
                     excelUtils
                         .createExcel(provider.fileNameController.text)
                         .then((value) {
 
-                      Navigator.of(context).pop();
+                      // Navigator.of(context).pop();
                     }).catchError((onError, stackTrace) {
 
-                      Navigator.of(context).pop();
+                      // Navigator.of(context).pop();
                     });
                   }
                 },
@@ -283,4 +321,8 @@ class SettingsTab extends StatelessWidget {
           );
         });
   }
+
+
+
+
 }

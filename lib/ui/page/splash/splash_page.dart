@@ -34,7 +34,7 @@ class _SplashState extends State<SplashPage> {
           children: [
            Center(
              child:  Image.asset(
-               ImageRes.sbt,
+               ImageRes.splash,
                height: 250.h,
                width: 250.w,
                fit: BoxFit.contain,

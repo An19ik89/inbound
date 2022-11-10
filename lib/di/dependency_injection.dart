@@ -15,7 +15,9 @@ import 'package:inbound_flutter/ui/page/navigation/tab/home_tab.dart';
 import 'package:inbound_flutter/ui/page/navigation/tab/settings_tab.dart';
 import 'package:inbound_flutter/ui/page/registration/registration_page.dart';
 import 'package:inbound_flutter/ui/page/splash/splash_page.dart';
+import 'package:inbound_flutter/ui/page/update/update_page.dart';
 import 'package:inbound_flutter/utils/excel_utils.dart';
+import 'package:inbound_flutter/utils/file_share_utils.dart';
 import 'package:inbound_flutter/utils/image_utils.dart';
 import 'package:inbound_flutter/utils/alert_dialog_utils.dart';
 import 'package:inbound_flutter/utils/res/qrscan_utils.dart';
@@ -50,6 +52,7 @@ Future<void> setup() async {
   di.registerSingleton(ExcelUtils());
   di.registerSingleton(AlertDialogUtils());
   di.registerSingleton(QrScanUtils());
+  di.registerSingleton(FileShareUtils());
 
   //pages
   di.registerSingleton(FieldPage());
@@ -57,6 +60,7 @@ Future<void> setup() async {
   di.registerSingleton(SplashPage());
   di.registerSingleton(LoginPage());
   di.registerSingleton(RegistrationPage());
+  di.registerSingleton(UpdatePage());
 
   //tab
   di.registerSingleton(HomeTab());
